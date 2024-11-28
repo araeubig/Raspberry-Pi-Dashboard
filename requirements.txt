@@ -1,0 +1,7 @@
+psutil
+pillow
+numpy
+spidev
+gpiozero
+netifaces
+influxdb-client[ciso]
