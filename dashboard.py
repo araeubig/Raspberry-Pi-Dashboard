@@ -4,6 +4,7 @@ import time
 import datetime
 import psutil
 import socket
+import subprocess
 import threading
 import netifaces
 import logging
@@ -102,14 +103,21 @@ def main():
     image_width = disp.height
     image_height = disp.width
 
-    # Get IP adress and set active network interface for later use
-    get_ip_address()
-
     # Create start image for drawing.
     image1 = Image.open('./images/logo_raspberry.png')
     disp.ShowImage(image1)
     splash_time = 5
     time.sleep(splash_time - 1)
+
+    # Add second start image if application is running as service
+    if is_running_as_service():
+        image1 = Image.open('./images/logo_influx_grafana.png')
+        disp.ShowImage(image1)
+        splash_time = 10
+        time.sleep(splash_time - 1)
+
+    # Get IP adress and set active network interface for later use
+    get_ip_address()
 
     # Create the ul/dl thread and a deque of length 1 to hold the ul/dl- values
     global transfer_rate
@@ -601,6 +609,13 @@ def show_alive(disp):
         draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2)), text, fill="WHITE", font=font_value, anchor="mm")
 
     disp.ShowImage(image1)
+
+def is_running_as_service():
+    state = subprocess.call(["systemctl", "is-active", "--quiet", "raspberry_pi_dashboard"])
+    if state == 0:
+        return True
+    else:
+        return False
 
 def is_raspberry_pi():
     try:
