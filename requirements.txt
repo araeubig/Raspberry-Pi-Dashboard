@@ -1,8 +1,8 @@
 psutil
 pillow
 numpy
-smbus
+smbus2
 spidev
 gpiozero
-netifaces
-influxdb-client[ciso]
+# netifaces
+# influxdb-client[ciso]
