@@ -109,9 +109,9 @@ def main():
     splash_time = 5
     time.sleep(splash_time - 1)
 
-    # Add second start image if application is running as service
+    # Add second splash time if application is running as service
     if is_running_as_service():
-        image1 = Image.open('./images/logo_influx_grafana.png')
+        image1 = Image.open('./images/logo_influx.png')
         disp.ShowImage(image1)
         splash_time = 10
         time.sleep(splash_time - 1)
