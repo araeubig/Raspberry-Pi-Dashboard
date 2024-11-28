@@ -6,6 +6,7 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 
 
 > QUOTE This repository is in progress for the first running version - please be patient and visit again in some days.
+By searching for a solution to fulfill all important steps i found a repository as a base. I didn^t creat a fork because i have to much changes. Therefore i started with this repo as base. In the final README you will find all informations about the base and the changed parts. 
 
 This repository contains all needed files to get a small LCD-Touch display running as dashboard for a headless Raspberry Pi. The focus of the project is not only the software for thedisplay, it's the complete running system for mounting at a DIN rail.
 
@@ -22,22 +23,22 @@ Possible HATS
 - [Raspberry Pi M.2 HAT+](https://www.raspberrypi.com/products/m2-hat-plus/)
     - State: Tested
     - SKU: N/A
-    - Raspberry Pi 5
+    - Use with: Raspberry Pi 5
     - Supported form factors: 2230, 2242
 - [Waveshare PoE M.2 HAT+](https://www.waveshare.com/pi5-case-din-rail-b.htm)
     - State: Tested
     - SKU: 28411
-    - Raspberry Pi 5
+    - Use with: Raspberry Pi 5
     - Supported form factors: 2230, 2242
 - [52Pi P33 M.2 PoE+ HAT]()
     - State: Tested
     - SKU: EP-0241
-    - Raspberry Pi 5
+    - Use with: Raspberry Pi 5
     - Supported form factors: 2230, 2242, 2260, 2280
 - [52Pi M.2 NVME PoE+ HAT]()
     - State: Untested
     - SKU: EP-0240
-    - Raspberry Pi 5
+    - Use with: Raspberry Pi 5
     - Supported form factors: 2230, 2242
 
 
@@ -60,24 +61,38 @@ Possible DIN Cases
 - [Waveshare DIN RAIL CASE Pi 5](https://www.waveshare.com/pi5-case-din-rail-b.htm)
     - State: Tested
     - SKU: 26682 / PI5-CASE-DIN-RAIL-B
-
+    - Use with: Raspberry Pi 5
     - Size: 4M
+
+|          Rank | THING-TO-RANK |
+|--------------:|---------------|
+|              1|               |
+|              2|               |
+|              3|               |
+
 
 - [Waveshare DIN RAIL CASE Pi 4](https://www.waveshare.com/pi4-case-din-rail-b.htm)
     - State: ested
     - SKU: 21173 / PI4-CASE-DIN-RAIL-B
-
+    - Use with: Raspberry Pi 4
     - Size: 4M    
 
-- [Italtronic MODULBOX XTS]()
+- [Italtronic MODULBOX XTS](https://eng.italtronic.com/accessori/25.0410000.RP5/)
     - State: Untested
-    - SKU:25.0410000.RP5
-    - 
-    - 
+    - SKU: 25.0410000.RP5
+    - Use with: Raspberry Pi 5
+    - Size: 4M
+
+- [Italtronic MODULBOX XTS](https://eng.italtronic.com/accessori/25.0410000.RP4/)
+    - State: Untested
+    - SKU: 25.0410000.RP4
+    - Use with: Raspberry Pi 4
+    - Size: 4M
+
 - [Phoenix Contact]()
-    - State:
+    - State: Untested
     - SKU:
-    - Use with: 
+    - Use with: Raspberry Pi 4 / Raspberry Pi 4 (coming begin 2025)
 
 
 ### Software
