@@ -15,7 +15,7 @@ class Touch_1inch69(config.RaspberryPi):
             self.Stop_Sleep()
         else:
             print("Error: Not Detected CST816T.\r\n")
-            return false
+            return False
 
     def Touch_Write_Byte(self, cmd, val):
         self.i2c_write_byte(cmd, val)
