@@ -42,13 +42,6 @@ class Touch_1inch69(config.RaspberryPi):
         self.digital_write(self.GPIO_TP_RST,True)
         time.sleep(0.05)
 
-    def Touch_Reset2(self):
-        self.digital_write(self.GPIO_TP_RST,False)
-        time.sleep(0.05)
-        # self.digital_write(self.GPIO_TP_RST,True)
-        # time.sleep(0.05)
-
-
     #Set mode  设置模式   
     def Set_Mode(self,mode,callback_time=10,rest_time=5): 
         # mode = 0 gestures mode 
