@@ -7,6 +7,8 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 
 > QUOTE This repository is in progress for the first running version - please be patient and visit again in some days.
 
+This repository contains all needed files to get a small LCD-Touch display running as dashboard for a headless Raspberry Pi. The focus of the project is not only the software for thedisplay, it's the complete running system for mounting at a DIN rail.
+
 ## About the project
 
 ### Why and for what?
@@ -18,22 +20,22 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 Possible HATS
 
 - [Raspberry Pi M.2 HAT+](https://www.raspberrypi.com/products/m2-hat-plus/)
-    - Tested
+    - State: Tested
     - SKU: N/A
     - Raspberry Pi 5
     - Supported form factors: 2230, 2242
 - [Waveshare PoE M.2 HAT+](https://www.waveshare.com/pi5-case-din-rail-b.htm)
-    - Tested
+    - State: Tested
     - SKU: 28411
     - Raspberry Pi 5
     - Supported form factors: 2230, 2242
 - [52Pi P33 M.2 PoE+ HAT]()
-    - Tested
+    - State: Tested
     - SKU: EP-0241
     - Raspberry Pi 5
     - Supported form factors: 2230, 2242, 2260, 2280
 - [52Pi M.2 NVME PoE+ HAT]()
-    - Untested
+    - State: Untested
     - SKU: EP-0240
     - Raspberry Pi 5
     - Supported form factors: 2230, 2242
@@ -41,33 +43,41 @@ Possible HATS
 
 #### Displays
 
+Possible Displays
+
+- [Waveshare]()
+    - State: Tested
+
 #### Cases
 
-Possible Desktop Cases 
+Possible Desktop Cases
 
-- [Argon Neo 5]()
+- [Argon Neo 5](https://argon40.com/products/argon-neo-5-blck-case-for-raspberry-pi-5-with-built-in-fan)
 
 
 Possible DIN Cases
 
 - [Waveshare DIN RAIL CASE Pi 5](https://www.waveshare.com/pi5-case-din-rail-b.htm)
-    - Tested
+    - State: Tested
     - SKU: 26682 / PI5-CASE-DIN-RAIL-B
 
     - Size: 4M
 
 - [Waveshare DIN RAIL CASE Pi 4](https://www.waveshare.com/pi4-case-din-rail-b.htm)
-    - Tested
+    - State: ested
     - SKU: 21173 / PI4-CASE-DIN-RAIL-B
 
     - Size: 4M    
 
 - [Italtronic MODULBOX XTS]()
-    - Untested
+    - State: Untested
     - SKU:25.0410000.RP5
     - 
     - 
 - [Phoenix Contact]()
+    - State:
+    - SKU:
+    - Use with: 
 
 
 ### Software
