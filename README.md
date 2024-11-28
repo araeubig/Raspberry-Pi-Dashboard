@@ -64,13 +64,6 @@ Possible DIN Cases
     - Use with: Raspberry Pi 5
     - Size: 4M
 
-|          Rank | THING-TO-RANK |
-|--------------:|---------------|
-|              1|               |
-|              2|               |
-|              3|               |
-
-
 - [Waveshare DIN RAIL CASE Pi 4](https://www.waveshare.com/pi4-case-din-rail-b.htm)
     - State: ested
     - SKU: 21173 / PI4-CASE-DIN-RAIL-B
