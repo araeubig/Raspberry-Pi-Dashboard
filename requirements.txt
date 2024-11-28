@@ -1,6 +1,7 @@
 psutil
 pillow
 numpy
+smbus
 spidev
 gpiozero
 netifaces
