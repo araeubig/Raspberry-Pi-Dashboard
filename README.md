@@ -7,8 +7,6 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 
 > QUOTE This repository is in progress for the first running version - please be patient and visit again in some days.
 
-## Disclaimer
-
 ## About the project
 
 ### Hardware
@@ -30,6 +28,8 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 ### Print yourself
 
 ## Contribution
+
+## Disclaimer
 
 
 
