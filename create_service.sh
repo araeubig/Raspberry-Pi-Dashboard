@@ -6,7 +6,7 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-SERVICE_NAME="raspberry_pi_dashboard"
+SERVICE_NAME="rpidashboard"
 RUN_SCRIPT="$(pwd)/run.sh"
 SERVICE_FILE="/etc/systemd/system/$SERVICE_NAME.service"
 REMOVE_SCRIPT="$(pwd)/remove_service.sh"
