@@ -10,4 +10,7 @@ git clone https://github.com/araeubig/Raspberry-Pi-Dashboard
 
 echo "Last dashbord version cloned. Peparing folder..."
 
-cd Raspberry-Pi-Dashboard
+(cd Raspberry-Pi-Dashboard; chmod +x *.sh)
+
+sudo ./run.sh
+
