@@ -2,7 +2,7 @@ psutil
 lgpio
 pillow
 numpy
-# smbus2
+smbus2
 spidev
 gpiozero
 netifaces
