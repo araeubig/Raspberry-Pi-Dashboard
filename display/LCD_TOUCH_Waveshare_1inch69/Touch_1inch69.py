@@ -41,7 +41,6 @@ class Touch_1inch69(config.RaspberryPi):
         time.sleep(0.01)
         self.digital_write(self.GPIO_TP_RST,True)
         time.sleep(0.05)
-        print("Reset")
 
     def Touch_Reset2(self):
         self.digital_write(self.GPIO_TP_RST,False)
