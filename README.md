@@ -9,7 +9,60 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 
 ## About the project
 
+### Why and for what?
+
 ### Hardware
+
+#### M.2 (PoE) HATS
+
+Possible HATS
+
+- Raspberry Pi M.2 HAT+
+    - Tested
+    - SKU: N/A
+    - Raspberry Pi 5
+    - Supported form factors: 2230, 2242
+- Waveshare PoE M.2 HAT+
+    - Tested
+    - SKU: 28411
+    - Raspberry Pi 5
+    - Supported form factors: 2230, 2242
+- 52Pi P33 M.2 PoE+ HAT
+    - Tested
+    - SKU: EP-0241
+    - Raspberry Pi 5
+    - Supported form factors: 2230, 2242, 2260, 2280
+- 52Pi M.2 NVME PoE+ HAT
+    - Untested
+    - SKU: EP-0240
+    - Raspberry Pi 5
+    - Supported form factors: 2230, 2242
+
+
+#### Displays
+
+#### Cases
+
+Possible Desktop Cases 
+
+- Argon Neo 5
+
+
+Possible DIN Cases
+
+- Waveshare DIN RAIL CASE
+    - Tested
+    - SKU: 26682
+
+    - Size: 4M
+
+- Italtronic MODULBOX XTS
+    - Untested
+    - SKU:25.0410000.RP5
+    - 
+    - 
+- Phoenix Contact
+
 
 ### Software
 
@@ -30,6 +83,8 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 ## Contribution
 
 ## Disclaimer
+
+## 
 
 
 
