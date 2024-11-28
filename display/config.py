@@ -31,7 +31,7 @@ import os
 import sys
 import time
 import spidev
-import smbus
+import smbus2
 import logging
 import numpy as np
 from gpiozero import *
@@ -59,7 +59,7 @@ class RaspberryPi:
         self.SPI = spi
             
         # #Initialize I2C
-        self.I2C = smbus.SMBus(1)
+        self.I2C = smbus2.SMBus(1)
         self.address = 0x15
 
     def gpio_mode(self,Pin,Mode,pull_up = None,active_state = True):
