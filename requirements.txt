@@ -6,4 +6,4 @@ numpy
 spidev
 gpiozero
 netifaces
-# influxdb-client[ciso]
+influxdb-client[ciso]

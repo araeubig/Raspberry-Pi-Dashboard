@@ -9,8 +9,8 @@ import netifaces
 import logging
 from collections import deque
 from PIL import Image, ImageDraw, ImageFont
-# from influxdb_client import InfluxDBClient
-# from influxdb_client.client.exceptions import InfluxDBError
+from influxdb_client import InfluxDBClient
+from influxdb_client.client.exceptions import InfluxDBError
 
 # from display import LCD_1inch69,Touch_1inch69
 
