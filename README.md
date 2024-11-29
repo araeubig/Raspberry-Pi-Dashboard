@@ -54,14 +54,13 @@ A great review about combined HATs was made by Jeff Geerling om YouTube:
 
 Possible Displays
 
-- [Waveshare]()
+- [Waveshare - 1.69inch LCD Touch Display Module, 240×280](https://www.waveshare.com/product/1.69inch-touch-lcd-module.htm)
     - State: Tested
+    - SKU: 27057 - 1.69inch Touch LCD Module
 
-- [Waveshare]()
+- [Waveshare - 1.69inch LCD Display Module, 240×280](https://www.waveshare.com/1.69inch-lcd-module.htm)
     - State: Tested
-
-- [Waveshare]()
-    - State: Tested
+    - SKU: 24382 - 1.69inch LCD Module
 
 - [Phoenix Contact]()
     - State: Tested
