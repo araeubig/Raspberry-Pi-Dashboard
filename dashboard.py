@@ -6,12 +6,13 @@ import psutil
 import socket
 import subprocess
 import threading
-import netifaces
+import netifaces # type: ignore
+# import signal
 import logging
 from collections import deque
 from PIL import Image, ImageDraw, ImageFont
-from influxdb_client import InfluxDBClient
-from influxdb_client.client.exceptions import InfluxDBError
+from influxdb_client import InfluxDBClient # type: ignore
+from influxdb_client.client.exceptions import InfluxDBError # type: ignore
 
 from display.LCD_TOUCH_Waveshare_1inch69 import LCD_1inch69
 from display.LCD_TOUCH_Waveshare_1inch69 import Touch_1inch69
@@ -117,7 +118,7 @@ def main():
         time.sleep(splash_time - 1)
 
     # Get IP adress and set active network interface for later use
-    get_ip_address()
+    get_raspberry_ip()
 
     # Create the ul/dl thread and a deque of length 1 to hold the ul/dl- values
     global transfer_rate
@@ -271,7 +272,7 @@ def calc_ul_dl(dt=1, interface="eth0"):
     except Exception as error:
         logging.error("An exception occurred: " + type(error).__name__)
 
-def get_cpu_temperature():
+def get_temperature_cpu():
     """
     Retrieves the current CPU temperature using the psutil library.
 
@@ -299,8 +300,7 @@ def get_cpu_temperature():
 
     return cpu_temp
 
-def get_ssd_temperature(num):
-    ssd_temp = ''
+def get_temperature_ssd(num):
     cmd = 'sudo nvme smart-log /dev/nvme' + str(num)
     data = os.popen(cmd)
     res = data.read()
@@ -309,7 +309,6 @@ def get_ssd_temperature(num):
             ssd_temp = item.strip().split(':')[1].split(" ")[1][:-2]
     if ssd_temp == '':
         ssd_temp = '0'
-        
     return int(ssd_temp)
 
 
@@ -352,7 +351,6 @@ def get_influx_measurements():
                         value = record.values['_value']
             elif not tables:
                 value = 0
-            # return value
         except InfluxDBError as e:
             if e.response.status == 401:
                 raise Exception(f"Insufficient write permissions to 'my-bucket'.") from e
@@ -376,7 +374,7 @@ def high_frequency_tasks():
     global cpu_temp
 
     cpu_percent = psutil.cpu_percent()
-    cpu_temp = get_cpu_temperature()
+    cpu_temp = get_temperature_cpu()
 
 def medium_frequency_tasks():
     logging.debug("medium_frequency_tasks()")
@@ -388,7 +386,7 @@ def medium_frequency_tasks():
     mem = psutil.virtual_memory()
     swap = psutil.swap_memory()
 
-    ssd_temp = get_ssd_temperature(0)
+    ssd_temp = get_temperature_ssd(0)
 
 def low_frequency_tasks():
     logging.debug("low_frequency_tasks()")
@@ -407,8 +405,8 @@ def low_frequency_tasks():
         disk = psutil.disk_usage("/home/")
 
     disk_free_tb = disk.used / 1024 / 1024 / 1024 / 1024
-    ip_local_address = get_ip_address()
-    hostname = get_hostname()
+    ip_local_address = get_raspberry_ip()
+    hostname = get_raspberry_hostname()
     
     measurements = get_influx_measurements()
 
@@ -417,7 +415,7 @@ def low_frequency_tasks():
 def one_time_tasks():
     logging.debug("one_time_tasks")
     global model
-    model = get_model()
+    model = get_raspberry_model()
 
 def check_ip(host,port,timeout=2):
     sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM) #presumably
@@ -442,11 +440,11 @@ def value_to_hex_color(value, base=50):
 
     return f'#{red_color:02x}{green_color:02x}{blue_color:02x}'
 
-def get_hostname():
+def get_raspberry_hostname():
     hostname = socket.gethostname()
     return hostname
 
-def get_ip_address():
+def get_raspberry_ip():
     """
     Get the local IP address, prioritizing Ethernet over WiFi.
 
@@ -468,7 +466,7 @@ def get_ip_address():
             continue
     return None
 
-def get_model() -> str:
+def get_raspberry_model() -> str:
     with open('/proc/device-tree/model') as f:
         model = f.read()
         model = model[:-1]
