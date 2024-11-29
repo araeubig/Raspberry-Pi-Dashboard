@@ -611,7 +611,7 @@ def show_alive(disp):
     disp.ShowImage(image1)
 
 def is_running_as_service():
-    state = subprocess.call(["systemctl", "is-active", "--quiet", "raspberry_pi_dashboard"])
+    state = subprocess.call(["systemctl", "is-active", "--quiet", "rpidashboard"])
     if state == 0:
         return True
     else:
