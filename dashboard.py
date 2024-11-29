@@ -29,7 +29,7 @@ en_i18n = gettext.translation(appname, localedir, fallback=True, languages=['en'
 en_i18n.install()
 
 # Translate message
-print( _("Hello World") )
+# print( _("Hello World") )
 
 # Raspberry Pi pin configuration:
 RST    = 27
@@ -218,13 +218,13 @@ def main():
 
                 if timeout != 0 and page == 0:
                     # Do every second
-                    high_frequency_tasks()
+                    # high_frequency_tasks()
                     # Do every 10th second
-                    if skip % 10 == 0:
-                        medium_frequency_tasks()
+                    # if skip % 10 == 0:
+                        # medium_frequency_tasks()
                     # Do every 30th second
-                    if skip % 30 == 0:
-                        low_frequency_tasks()
+                    # if skip % 30 == 0:
+                        # low_frequency_tasks()
                     # Show dashboard
                     show_stats(disp)
                 elif timeout != 0 and page == 1:
