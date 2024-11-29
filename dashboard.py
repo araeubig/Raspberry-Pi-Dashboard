@@ -6,6 +6,7 @@ import psutil
 import socket
 import subprocess
 import threading
+import gettext
 import netifaces # type: ignore
 # import signal
 import logging
@@ -16,6 +17,19 @@ from influxdb_client.client.exceptions import InfluxDBError # type: ignore
 
 from display.LCD_TOUCH_Waveshare_1inch69 import LCD_1inch69
 from display.LCD_TOUCH_Waveshare_1inch69 import Touch_1inch69
+
+# Set the local directory
+appname = 'rpidashboard'
+localedir = './locales'
+
+# Set up Gettext
+en_i18n = gettext.translation(appname, localedir, fallback=True, languages=['en'])
+
+# Create the "magic" function
+en_i18n.install()
+
+# Translate message
+print( _("Hello World") )
 
 # Raspberry Pi pin configuration:
 RST    = 27
@@ -30,7 +44,7 @@ influx_port = 8086
 influx_bucket = 'X1-TEST'
 influx_token = 'jED07ac_52dsyq0AVQWYcBkVzpfInWq6BNqIfkIjcjc2DP_BSIHDsu8kpHa_i3UIxLcRqrvuDIJWTZt2ALSdWw=='
 influx_org = 'BWS'
-influx_range_hours = -48
+influx_range_hours = -168
 
 # Grafana config
 grafana_host = 'localhost'
