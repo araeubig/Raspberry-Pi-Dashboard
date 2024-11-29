@@ -10,6 +10,10 @@ By searching for a solution to fulfill all important steps i found a repository 
 
 This repository contains all needed files to get a small LCD-Touch display running as dashboard for a headless Raspberry Pi. The focus of the project is not only the software for the display, it's the complete running system for mounting on a DIN rail.
 
+## Table of contents
+- [About the project](#about--the--project)
+
+
 ## About the project
 
 ### Why and for what?
@@ -41,12 +45,25 @@ Possible HATS
     - Use with: Raspberry Pi 5
     - Supported form factors: 2230, 2242
 
+A great review about combined HATs was made by Jeff Geerling om YouTube:
+
+[![PoE+ NVMe beats Raspberry Pi to the punch](http://img.youtube.com/vi/x9ceI0_r_Kg/0.jpg)](http://www.youtube.com/watch?v=x9ceI0_r_Kg "PoE+ NVMe beats Raspberry Pi to the punch")
+
 
 #### Displays
 
 Possible Displays
 
 - [Waveshare]()
+    - State: Tested
+
+- [Waveshare]()
+    - State: Tested
+
+- [Waveshare]()
+    - State: Tested
+
+- [Phoenix Contact]()
     - State: Tested
 
 #### Cases
@@ -65,7 +82,7 @@ Possible DIN Cases
     - Size: 4M
 
 - [Waveshare DIN RAIL CASE Pi 4](https://www.waveshare.com/pi4-case-din-rail-b.htm)
-    - State: ested
+    - State: Tested
     - SKU: 21173 / PI4-CASE-DIN-RAIL-B
     - Use with: Raspberry Pi 4
     - Size: 4M    
@@ -87,6 +104,14 @@ Possible DIN Cases
     - SKU:
     - Use with: Raspberry Pi 4 / Raspberry Pi 4 (coming begin 2025)
 
+- [eSc EDV SYSTEM - ESCPi5]()
+    - State: Untested
+    - SKU: ESCPi5
+    - Use with: Raspberry Pi 5
+
+#### Accessoires
+
+
 
 ### Software
 
@@ -103,6 +128,8 @@ Possible DIN Cases
 ### Printing services
 
 ### Print yourself
+
+## To Do's
 
 ## Contribution
 
