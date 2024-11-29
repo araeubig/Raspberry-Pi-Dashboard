@@ -6,7 +6,7 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 
 
 > QUOTE This repository is in progress for the first running version - please be patient and visit again in some days.
-By searching for a solution to fulfill all important steps i found a repository as a very good starting point. I didn^t create a fork because there are to many changes and enhancements. Therefore i started with this new repository. In the final README you will find all informations about the original repo, this repo and the changed parts. 
+By searching for a solution to fulfill all important steps i found a repository as a very good starting point. I didn't create a fork because there are to many changes and enhancements. Therefore i started with this new repository. In the final README you will find all informations about the original repo, this repo and the changed parts. 
 
 This repository contains all needed files to get a small LCD-Touch display running as dashboard for a headless Raspberry Pi. The focus of the project is not only the software for the display, it's the complete running system for mounting on a DIN rail.
 
