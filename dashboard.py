@@ -126,9 +126,10 @@ def main():
 
     # Add second splash time if application is running as service
     if is_running_as_service():
-        image1 = Image.open('./images/logo_influx.png')
-        disp.ShowImage(image1)
-        splash_time = 10
+        # image1 = Image.open('./images/logo_influx.png')
+        # disp.ShowImage(image1)
+        # splash_time = 10
+        
         time.sleep(splash_time - 1)
 
     # Get IP adress and set active network interface for later use
@@ -344,7 +345,7 @@ def get_influx_range():
 def get_influx_measurements():
     global influx_range_hours
 
-    if check_influx_status() == False:
+    if check_status_influx() == False:
         return 0
 
     p = {"_start": datetime.timedelta(hours= influx_range_hours)}
@@ -371,12 +372,12 @@ def get_influx_measurements():
             raise
     return value
 
-def check_influx_status():
+def check_status_influx():
     check = check_ip(influx_host, influx_port)
     logging.debug("Influx: %s", check)
     return check
     
-def check_grafana_status():
+def check_status_grafana():
     check = check_ip(grafana_host, grafana_port)
     logging.debug("Grafana: %s", check)
     return check
@@ -424,7 +425,7 @@ def low_frequency_tasks():
     
     measurements = get_influx_measurements()
 
-    grafana_status = check_grafana_status()
+    grafana_status = check_status_grafana()
 
 def one_time_tasks():
     logging.debug("one_time_tasks")
