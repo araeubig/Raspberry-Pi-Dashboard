@@ -10,18 +10,6 @@ By searching for a solution to fulfill all important steps i found a repository 
 
 This repository contains all needed files to get a small LCD-Touch display running as dashboard for a headless Raspberry Pi. The focus of the project is not only the software for the display, it's the complete running system for mounting on a DIN rail.
 
-## Table of contents
-- [About the project](#about-the-project)
-    - [Why and for what?](#why-and-for-what)
-    - [Hardware](#hardware)
-        - [M.2 (PoE) HATS](#m2-poe-hats)
-        - [Displays](#displays)
-        - [Cases](#cases)
-        - [Accessoires](#accessories)
-    - [Software](#software)
-    
-
-
 ## About the project
 
 ### Why and for what?
