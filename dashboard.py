@@ -14,6 +14,7 @@ from collections import deque
 from PIL import Image, ImageDraw, ImageFont
 from influxdb_client import InfluxDBClient # type: ignore
 from influxdb_client.client.exceptions import InfluxDBError # type: ignore
+# from typing import Callable
 
 from display.LCD_TOUCH_Waveshare_1inch69 import LCD_1inch69
 from display.LCD_TOUCH_Waveshare_1inch69 import Touch_1inch69
@@ -24,6 +25,7 @@ localedir = './locales'
 
 # Set up Gettext
 en_i18n = gettext.translation(appname, localedir, fallback=True, languages=['en'])
+_ = en_i18n.gettext
 
 # Create the "magic" function
 en_i18n.install()
@@ -679,6 +681,9 @@ def check_python_version():
     if current_version > required_version:
         return True
     return False
+
+# def _(s: str) -> str:
+#     return s
 
 if __name__ == '__main__':
     if check_python_version():
