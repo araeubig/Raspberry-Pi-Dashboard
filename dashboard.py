@@ -121,7 +121,7 @@ def main():
     # Create start image for drawing.
     image1 = Image.open('./images/logo_raspberry.png')
     draw = ImageDraw.Draw(image1)
-    draw.text((image_width / 2,image_height - (font_header_size * 2 )), '   Starting dashboard...', fill='BLACK', font=font_header, anchor="mm")
+    draw.text((image_width / 2,image_height - (font_header_size * 2 )), _('   Starting dashboard...'), fill='BLACK', font=font_header, anchor="mm")
 
     disp.ShowImage(image1)
     if is_running_as_service():
@@ -329,7 +329,7 @@ def get_influx_range():
     global influx_range_hours
 
     if influx_range_hours > -24:
-        range = str(influx_range_hours) + 'h'
+        range = str(influx_range_hours) + _('h')
         return range
     else:
         value = influx_range_hours / 24
@@ -337,7 +337,7 @@ def get_influx_range():
             y = int(value)
         else:
             y = value
-        range = str(y) + 'd'
+        range = str(y) + _('d')
         return range
 
 def get_influx_measurements():
@@ -586,11 +586,11 @@ def show_reboot(disp, state = False):
     row = 1
     image1 = Image.new("RGB", (image_width, image_height), color_background)
     draw = ImageDraw.Draw(image1)
-    draw.text((image_width / 2,(image_height / 3 * row) - (image_height / 3 / 2) - (font_menu_size / 2) - (font_menu_size / 6)), 'REBOOT SYSTEM?', fill=color_value, font=font_menu, anchor="mm")
+    draw.text((image_width / 2,(image_height / 3 * row) - (image_height / 3 / 2) - (font_menu_size / 2) - (font_menu_size / 6)), _('REBOOT SYSTEM?'), fill=color_value, font=font_menu, anchor="mm")
     draw.rounded_rectangle([(30,180),(125,220)], radius=2.5, fill=color_state, outline=None, width=1)
-    draw.text((77.5,200), 'Yes', fill=color_value, font=font_menu, anchor="mm")
+    draw.text((77.5,200), _('Yes'), fill=color_value, font=font_menu, anchor="mm")
     draw.rounded_rectangle([(155,180),(250,220)], radius=2.5, fill=color_header, outline=None, width=1)
-    draw.text((202.5,200), 'No', fill=color_value, font=font_menu, anchor="mm")
+    draw.text((202.5,200), _('No'), fill=color_value, font=font_menu, anchor="mm")
     disp.ShowImage(image1)
 
 def show_shutdown(disp):
@@ -599,11 +599,11 @@ def show_shutdown(disp):
     row = 1
     image1 = Image.new("RGB", (image_width, image_height), color_background)
     draw = ImageDraw.Draw(image1)
-    draw.text((image_width / 2,(image_height / 3 * row) - (image_height / 3 / 2) - (font_menu_size / 2) - (font_menu_size / 6)), 'SHUTDOWN SYSTEM?', fill=color_value, font=font_menu, anchor="mm")
+    draw.text((image_width / 2,(image_height / 3 * row) - (image_height / 3 / 2) - (font_menu_size / 2) - (font_menu_size / 6)), _('SHUTDOWN SYSTEM?'), fill=color_value, font=font_menu, anchor="mm")
     draw.rounded_rectangle([(30,180),(125,220)], radius=2.5, fill=color_header, outline=None, width=1)
-    draw.text((77.5,200), 'Yes', fill=color_value, font=font_menu, anchor="mm")
+    draw.text((77.5,200), _('Yes'), fill=color_value, font=font_menu, anchor="mm")
     draw.rounded_rectangle([(155,180),(250,220)], radius=2.5, fill=color_header, outline=None, width=1)
-    draw.text((202.5,200), 'No', fill=color_value, font=font_menu, anchor="mm")
+    draw.text((202.5,200), _('No'), fill=color_value, font=font_menu, anchor="mm")
     disp.ShowImage(image1)
 
 def show_alive(disp):
