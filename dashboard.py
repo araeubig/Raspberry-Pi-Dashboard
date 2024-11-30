@@ -120,17 +120,15 @@ def main():
 
     # Create start image for drawing.
     image1 = Image.open('./images/logo_raspberry.png')
-    disp.ShowImage(image1)
-    splash_time = 5
-    time.sleep(splash_time - 1)
+    draw = ImageDraw.Draw(image1)
+    draw.text((image_width / 2,image_height - (font_header_size * 2 )), '   Starting dashboard...', fill='BLACK', font=font_header, anchor="mm")
 
-    # Add second splash time if application is running as service
+    disp.ShowImage(image1)
     if is_running_as_service():
-        # image1 = Image.open('./images/logo_influx.png')
-        # disp.ShowImage(image1)
-        # splash_time = 10
-        
-        time.sleep(splash_time - 1)
+        splash_time = 10
+    else:
+        splash_time = 5
+    time.sleep(splash_time - 1)
 
     # Get IP adress and set active network interface for later use
     get_raspberry_ip()
