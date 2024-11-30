@@ -14,7 +14,6 @@ from collections import deque
 from PIL import Image, ImageDraw, ImageFont
 from influxdb_client import InfluxDBClient # type: ignore
 from influxdb_client.client.exceptions import InfluxDBError # type: ignore
-# from typing import Callable
 
 from display.LCD_TOUCH_Waveshare_1inch69 import LCD_1inch69
 from display.LCD_TOUCH_Waveshare_1inch69 import Touch_1inch69
@@ -27,11 +26,8 @@ localedir = './locales'
 en_i18n = gettext.translation(appname, localedir, fallback=True, languages=['en'])
 _ = en_i18n.gettext
 
-# Create the "magic" function
+# Create the translation unction
 en_i18n.install()
-
-# Translate message
-# print( _("Hello World") )
 
 # Raspberry Pi pin configuration:
 RST    = 27
