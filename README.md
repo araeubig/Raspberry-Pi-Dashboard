@@ -114,7 +114,7 @@ You could run the dashboard 'one-time' or as 'service'. For customizing and test
 cd Raspberry-Pi-Dashboard
 ./run.sh
 ```
-Stop the running dashboard with <kbd>Control</kbd> + <kbd>C</kbd>
+Stop the running dashboard with <kbd>⌃ Control</kbd> + <kbd>C</kbd>
 ### Run dashboard as service on startup
 ```shell
 cd Raspberry-Pi-Dashboard
