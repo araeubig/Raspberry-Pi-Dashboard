@@ -1,5 +1,5 @@
 # Raspberry-Pi-Dashboard
-A configurable LCD dashboard with touch functionality for headless Raspberry Pi servers. (Optional without touch / mounting in distribution cabinet)
+A configurable LCD dashboard with touch functionality for headless Raspberry Pi servers. (Optional without touch or mounting in distribution cabinet)
 
 <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faraeubig%2FRaspberry-Pi-Dashboard&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
 <a href="/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="license" /></a>
@@ -30,6 +30,34 @@ While testing the possible components, I decided to document two variants for mo
 ### Hardware
 
 #### Cases
+
+##### DIN mount
+
+- [Waveshare DIN RAIL CASE Pi 5](https://www.waveshare.com/pi5-case-din-rail-b.htm)
+    - State: Tested
+    - SKU: 26682 / PI5-CASE-DIN-RAIL-B
+    - Use with: Raspberry Pi 5
+    - Size: 4M
+  
+- [Italtronic MODULBOX XTS](https://eng.italtronic.com/accessori/25.0410000.RP5/) !!!CURRENTLY NO AIR VENTS 
+    - State: Untested
+    - SKU: 25.0410000.RP5
+    - Use with: Raspberry Pi 5
+    - Size: 4M
+
+- [Phoenix Contact BC Series](https://www.phoenixcontact.com/en-pc/products/electronics-housings/electronics-housings-for-raspberry-pi-applications) CURRENTLY NOT OPTIMIZED FOR RPi 5
+    - State: Untested
+    - SKU: 2202874
+    - Use with: Raspberry Pi 5
+    - Size: 6M
+
+##### Standard case
+
+[Argon Neo 5 M.2 NVME](https://argon40.com/products/argon-neo-5-m-2-nvme-for-raspberry-pi-5)
+    - State: Untested
+    - SKU: N/A
+    - Use with: Raspberry Pi 5
+    - Size: standard
 
 #### Displays
 

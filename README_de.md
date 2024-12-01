@@ -20,8 +20,42 @@ Während des Tests der möglichen Komponenten habe ich entschieden zwei Variante
 
 ### Hardware
 
+#### Gehäuse
 
+##### DIN-Gehäuse
+
+- [Waveshare DIN RAIL CASE Pi 5](https://www.waveshare.com/pi5-case-din-rail-b.htm)
+    - Status: Getestet
+    - Artikelnummer: 26682 / PI5-CASE-DIN-RAIL-B
+    - Nutzung mit: Raspberry Pi 5
+    - Grösse: 4TE
+  
+- [Italtronic MODULBOX XTS](https://eng.italtronic.com/accessori/25.0410000.RP5/) ! AKTUELL KEINE LÜFTUNGSÖFFNUNGEN
+    - Status: Ungetestet
+    - Artikelnumnmer: 25.0410000.RP5
+    - Nutzung mit: Raspberry Pi 5
+    - Grösse: 4TE
+
+- [Phoenix Contact BC Serie](https://www.phoenixcontact.com/de-ch/produkte/elektronikgehaeuse/elektronikgehaeuse-fuer-raspberry-pi-anwendungen) ! AKTUELL NICHT FÜR RPi 5 OPTIMIERT
+    - Status: Ungetestet
+    - Artikelnumnmer: 2202874
+    - Nutzung mit: Raspberry Pi 5
+    - Grösse: 6TE
+
+##### Standard-Gehäuse
+
+[Argon Neo 5 M.2 NVME](https://argon40.com/products/argon-neo-5-m-2-nvme-for-raspberry-pi-5)
+    - Status: Ungetestet
+    - Artikelnummer: -
+    - Nutzung mit: Raspberry Pi 5
+    - Grösse: Standard
+
+#### Displays
+
+#### HAT's
 
 ## Installation
 
 ## Montage
+
+## Software
