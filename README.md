@@ -4,83 +4,64 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faraeubig%2FRaspberry-Pi-Dashboard&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
 <a href="/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="license" /></a>
 
-
 > QUOTE This repository is in progress for the first running version - please be patient and visit again in some days. By searching for a solution to fulfill all important steps i found a repository as a very good starting point. I didn't create a fork because there are to many changes and enhancements. Therefore i started with this new repository. In the final README you will find all informations about the original repo, this repo and the changed parts.
-
 ## About the project
-
 As the Raspberry is to be operated as a server in the distribution cabinet, it not only needs a DIN housing, but also a display to show the most important system information. Another requirement was to be able to restart and shut down the Raspberry using buttons or a touch display. Last but not least, the Raspberry should not only be supplied with power via PoE, but also offer an M.2 slot for an NVMe SSD - because this is the only way to ensure long-term operation without possible SD card failures.
 
-The search for the necessary components turned out to be more difficult than expected. The market offers only a few DIN housings for the Raspberry Pi 5, and there are only a few displays with a touch option that are small enough to fit into the housing. The range of combined PoE-M.2 HATS is manageable, but more than sufficient.
+The search for the necessary components turned out to be more difficult than expected. The market offers only a few DIN housings for the Raspberry Pi - espacially for the model 5, and there are only a few displays with a touch option that are small enough to fit into the housing. The range of combined PoE-M.2 HATS is manageable, but more than sufficient.
 
 While testing the possible components, I decided to document two variants for mounting on a DIN rail and another variant for desktop use:
 
 1. configuration with 4M wide housing for exclusive power supply via PoE
 2. configuration with 6M wide housing for optional power supply via 24V or 220V
 3. Configuration with standard housing for power supply via USB plug-in power supply unit without touch functionality
-
 ## Requirements
-
 - Raspberry Pi 5
 - Touch display that fits into the DIN housing / desktop case (preferably with ST7789V2 driver)
 - DIN case / standard case
 - 3D printed model of DIN Case top / desktop case cover
 - Python >= 3.9
-
 ### Hardware
-
 #### Cases
-
 ##### DIN mount
-
 - [Waveshare DIN RAIL CASE Pi 5](https://www.waveshare.com/pi5-case-din-rail-b.htm)
-    - State: Tested
-    - SKU: 26682 / PI5-CASE-DIN-RAIL-B
-    - Use with: Raspberry Pi 5
-    - Size: 4M
-  
+  - State: Tested
+  - SKU: 26682 / PI5-CASE-DIN-RAIL-B
+  - Use with: Raspberry Pi 5
+  - Size: 4M
 - [Italtronic MODULBOX XTS](https://eng.italtronic.com/accessori/25.0410000.RP5/) !!!CURRENTLY NO AIR VENTS 
     - State: Untested
     - SKU: 25.0410000.RP5
     - Use with: Raspberry Pi 5
     - Size: 4M
-
 - [Phoenix Contact BC Series](https://www.phoenixcontact.com/en-pc/products/electronics-housings/electronics-housings-for-raspberry-pi-applications) CURRENTLY NOT OPTIMIZED FOR RPi 5
-    - State: Untested
-    - SKU: 2202874
-    - Use with: Raspberry Pi 5
-    - Size: 6M
-
+  - State: Untested
+  - SKU: 2202874
+  - Use with: Raspberry Pi 5
+  - Size: 6M
 ##### Standard case
-
 - [Argon Neo 5 M.2 NVME](https://argon40.com/products/argon-neo-5-m-2-nvme-for-raspberry-pi-5)
-    - State: Untested
-    - SKU: N/A
-    - Use with: Raspberry Pi 5
-    - Size: standard
-
+  - State: Untested
+  - SKU: N/A
+  - Use with: Raspberry Pi 5
+  - Size: standard
 #### Displays
-
 - [Waveshare - 1.69inch LCD Touch Display Module, 240×280](https://www.waveshare.com/product/1.69inch-touch-lcd-module.htm)
     - State: Tested
     - SKU: 27057 - 1.69inch Touch LCD Module
     - Resolution: 240x280
     - Use with: DIN case
-
 - [Waveshare - 1.69inch LCD Display Module, 240×280](https://www.waveshare.com/1.69inch-lcd-module.htm) WITHOUT TOUCH
     - State: Tested
     - SKU: 24382 - 1.69inch LCD Module
     - Resolution: 240x280
     - Use with: DIN case, standard case
-
-- [Phoenix Contact BC 107.6 DKL](https://www.phoenixcontact.com/en-pc/products/electronics-housings/bc-modular-electronics-housings)
-    - State: Untested
-    - SKU: 1335865
-    - Resolution: 320x240
-    - Use with: Phoenix Contact DIN case
-
+- [Phoenix Contact BC Series](https://www.phoenixcontact.com/en-pc/products/electronics-housings/electronics-housings-for-raspberry-pi-applications) CURRENTLY NOT OPTIMIZED FOR RPi 5
+  - State: Untested
+  - SKU: 2202874
+  - Use with: Raspberry Pi 5
+  - Size: 6M
 #### HAT's
-
 - [Raspberry Pi M.2 HAT+](https://www.raspberrypi.com/products/m2-hat-plus/)
     - State: Tested
     - SKU: N/A
@@ -105,4 +86,3 @@ While testing the possible components, I decided to document two variants for mo
 A great review about combined HATs was made by Jeff Geerling om YouTube:
 
 [![PoE+ NVMe beats Raspberry Pi to the punch](http://img.youtube.com/vi/x9ceI0_r_Kg/0.jpg)](http://www.youtube.com/watch?v=x9ceI0_r_Kg "PoE+ NVMe beats Raspberry Pi to the punch")
-
