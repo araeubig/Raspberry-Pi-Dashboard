@@ -23,8 +23,8 @@ While testing the possible components, I decided to document two variants for mo
 
 - Raspberry Pi 5
 - Touch display that fits into the DIN housing / desktop case (preferably with ST7789V2 driver)
-- 3D printed model of DIN Case top / desktop case cover
 - DIN case / standard case
+- 3D printed model of DIN Case top / desktop case cover
 - Python >= 3.9
 
 ### Hardware
@@ -60,6 +60,24 @@ While testing the possible components, I decided to document two variants for mo
     - Size: standard
 
 #### Displays
+
+- [Waveshare - 1.69inch LCD Touch Display Module, 240×280](https://www.waveshare.com/product/1.69inch-touch-lcd-module.htm)
+    - State: Tested
+    - SKU: 27057 - 1.69inch Touch LCD Module
+    - Resolution: 240x280
+    - Use with: DIN case
+
+- [Waveshare - 1.69inch LCD Display Module, 240×280](https://www.waveshare.com/1.69inch-lcd-module.htm) WITHOUT TOUCH
+    - State: Tested
+    - SKU: 24382 - 1.69inch LCD Module
+    - Resolution: 240x280
+    - Use with: DIN case, standard case
+
+- [Phoenix Contact BC 107.6 DKL](https://www.phoenixcontact.com/en-pc/products/electronics-housings/bc-modular-electronics-housings)
+    - State: Untested
+    - SKU: 1335865
+    - Resolution: 320x240
+    - Use with: Phoenix Contact DIN case
 
 #### HAT's
 
