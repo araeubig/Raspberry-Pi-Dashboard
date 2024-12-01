@@ -53,7 +53,7 @@ While testing the possible components, I decided to document two variants for mo
 
 ##### Standard case
 
-[Argon Neo 5 M.2 NVME](https://argon40.com/products/argon-neo-5-m-2-nvme-for-raspberry-pi-5)
+- [Argon Neo 5 M.2 NVME](https://argon40.com/products/argon-neo-5-m-2-nvme-for-raspberry-pi-5)
     - State: Untested
     - SKU: N/A
     - Use with: Raspberry Pi 5
