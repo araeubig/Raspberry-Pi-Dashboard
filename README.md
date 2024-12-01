@@ -21,9 +21,9 @@ While testing the possible components, I decided to document two variants for mo
 - DIN case / standard case
 - 3D printed model of DIN Case top / desktop case cover
 - Python >= 3.9
-### Hardware
-#### Cases
-##### DIN mount
+## Recommended Hardware
+### Cases
+#### DIN mount
 - [Waveshare DIN RAIL CASE Pi 5](https://www.waveshare.com/pi5-case-din-rail-b.htm)
   - State: Tested
   - SKU: 26682 / PI5-CASE-DIN-RAIL-B
@@ -39,13 +39,13 @@ While testing the possible components, I decided to document two variants for mo
   - SKU: 2202874
   - Use with: Raspberry Pi 5
   - Size: 6M
-##### Standard case
+#### Standard case
 - [Argon Neo 5 M.2 NVME](https://argon40.com/products/argon-neo-5-m-2-nvme-for-raspberry-pi-5)
   - State: Untested
   - SKU: N/A
   - Use with: Raspberry Pi 5
   - Size: standard
-#### Displays
+### Displays
 - [Waveshare - 1.69inch LCD Touch Display Module, 240×280](https://www.waveshare.com/product/1.69inch-touch-lcd-module.htm)
     - State: Tested
     - SKU: 27057 - 1.69inch Touch LCD Module
@@ -61,7 +61,7 @@ While testing the possible components, I decided to document two variants for mo
   - SKU: 2202874
   - Use with: Raspberry Pi 5
   - Size: 6M
-#### HAT's
+### HAT's
 - [Raspberry Pi M.2 HAT+](https://www.raspberrypi.com/products/m2-hat-plus/)
     - State: Tested
     - SKU: N/A
@@ -87,7 +87,7 @@ A great review about combined HATs was made by Jeff Geerling on YouTube:
 
 [![PoE+ NVMe beats Raspberry Pi to the punch](http://img.youtube.com/vi/x9ceI0_r_Kg/0.jpg)](http://www.youtube.com/watch?v=x9ceI0_r_Kg "PoE+ NVMe beats Raspberry Pi to the punch")
 
-#### Accessory
+### Accessory
 - [Waveshare Micro HDMI to HDMI Multifunctional Adapter](https://www.waveshare.com/pi5-connector-adapter.htm)
     - State: Currently untested / Upcoming
     - SKU: 28411
