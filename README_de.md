@@ -14,8 +14,8 @@ Während des Tests der möglichen Komponenten habe ich entschieden zwei Variante
 
 - Raspberry Pi 5
 - Touch-Display welches in das DIN-Gehäuse passt (möglichst mit ST7789V2 Ansteuerung)
-- 3D Druck des Deckels DIN-Gehäuse / Deckel des Standard-Gehäuses
 - DIN-Gehäuse / Standard-Gehäuse
+- 3D Druck des Deckels DIN-Gehäuse / Deckel des Standard-Gehäuses
 - Python >= 3.9
 
 ### Hardware
