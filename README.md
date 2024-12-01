@@ -35,7 +35,7 @@ While testing the possible components, I decided to document two variants for mo
     - Use with: Raspberry Pi 5
     - Size: 4M
 - [Phoenix Contact BC Series](https://www.phoenixcontact.com/en-pc/products/electronics-housings/electronics-housings-for-raspberry-pi-applications) CURRENTLY NOT OPTIMIZED FOR RPi 5
-  - State: Untested
+  - State: Currently Untested / Upcoming
   - SKU: 2202874
   - Use with: Raspberry Pi 5
   - Size: 6M
@@ -57,7 +57,7 @@ While testing the possible components, I decided to document two variants for mo
     - Resolution: 240x280
     - Use with: DIN case, standard case
 - [Phoenix Contact BC Series](https://www.phoenixcontact.com/en-pc/products/electronics-housings/electronics-housings-for-raspberry-pi-applications) CURRENTLY NOT OPTIMIZED FOR RPi 5
-  - State: Untested
+  - State: Currently untested / Upcoming
   - SKU: 2202874
   - Use with: Raspberry Pi 5
   - Size: 6M
@@ -78,11 +78,25 @@ While testing the possible components, I decided to document two variants for mo
     - Use with: Raspberry Pi 5, DIN case
     - Supported form factors: 2230, 2242, 2260, 2280
 - [52Pi M.2 NVME PoE+ HAT](https://52pi.com/products/m-2-nvme-m-key-poe-hat-with-official-pi-5-active-cooler-for-raspberry-pi-5-support-m-2-nvme-ssd-2230-2242?variant=44972209012888)
-    - State: Untested
+    - State: Currently untested / Upcoming
     - SKU: EP-0240
     - Use with: Raspberry Pi 5, DIN case
     - Supported form factors: 2230, 2242
 
-A great review about combined HATs was made by Jeff Geerling om YouTube:
+A great review about combined HATs was made by Jeff Geerling on YouTube:
 
 [![PoE+ NVMe beats Raspberry Pi to the punch](http://img.youtube.com/vi/x9ceI0_r_Kg/0.jpg)](http://www.youtube.com/watch?v=x9ceI0_r_Kg "PoE+ NVMe beats Raspberry Pi to the punch")
+
+#### Accessory
+- [Waveshare Micro HDMI to HDMI Multifunctional Adapter](https://www.waveshare.com/pi5-connector-adapter.htm)
+    - State: Currently untested / Upcoming
+    - SKU: 28411
+    - Use with: Raspberry Pi 5, DIN case 6M
+- [Argon THRML 30mm Active Cooler](https://argon40.com/products/argon-thrml-30mm-active-cooler?variant=47734223077649)
+    - State: Currently untested / Upcoming
+    - SKU: N/A
+    - Use with: Raspberry Pi 5, DIN case, standard case
+- [Raspberry Pi Active Cooler](https://www.raspberrypi.com/products/active-cooler/)
+    - State: Tested
+    - SKU: N/A
+    - Use with: Raspberry Pi 5, DIN case, standard case
