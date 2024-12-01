@@ -4,7 +4,7 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faraeubig%2FRaspberry-Pi-Dashboard&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
 <a href="/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="license" /></a>
 
-> QUOTE This repository is in progress for the first documented version. The current version works perfectly, but there are still a few fine adjustments to make the configuration easier  - please be patient and visit again in some days. By searching for a solution to fulfill all important steps i found a repository as a very good starting point. I didn't create a fork because there are to many changes and enhancements. Therefore i started with this new repository. In the final README you will find all informations about the original repo, this repo and the changed parts.
+> This repository is in progress for the first documented version. The current version works perfectly, but there are still a few fine adjustments to make the configuration easier  - please be patient and visit again in some days. By searching for a solution to fulfill all important steps i found a repository as a very good starting point. I didn't create a fork because there are to many changes and enhancements. Therefore i started with this new repository. In the final README you will find all informations about the original repo, this repo and the changed parts.
 ## About the project
 As the Raspberry is to be operated as a server in the distribution cabinet, it not only needs a DIN housing, but also a display to show the most important system information. Another requirement was to be able to restart and shut down the Raspberry using buttons or a touch display. Last but not least, the Raspberry should not only be supplied with power via PoE, but also offer an M.2 slot for an NVMe SSD - because this is the only way to ensure long-term operation without possible SD card failures.
 
@@ -30,6 +30,7 @@ While testing the possible components, I decided to document two variants for mo
 
 ![Dashboard](/files/examples/shutdown.jpg)
 *Shutdown*
+> The text is much brighter on the display (based on the backlight)
 ## Requirements
 - Raspberry Pi 5
 - Touch display that fits into the DIN housing / desktop case (preferably with ST7789V2 driver)
