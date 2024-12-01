@@ -44,7 +44,7 @@ Während des Tests der möglichen Komponenten habe ich entschieden zwei Variante
 
 ##### Standard-Gehäuse
 
-[Argon Neo 5 M.2 NVME](https://argon40.com/products/argon-neo-5-m-2-nvme-for-raspberry-pi-5)
+- [Argon Neo 5 M.2 NVME](https://argon40.com/products/argon-neo-5-m-2-nvme-for-raspberry-pi-5)
     - Status: Ungetestet
     - Artikelnummer: -
     - Nutzung mit: Raspberry Pi 5
