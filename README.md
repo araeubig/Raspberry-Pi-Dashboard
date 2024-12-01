@@ -81,7 +81,28 @@ While testing the possible components, I decided to document two variants for mo
 
 #### HAT's
 
+- [Raspberry Pi M.2 HAT+](https://www.raspberrypi.com/products/m2-hat-plus/)
+    - State: Tested
+    - SKU: N/A
+    - Use with: Raspberry Pi 5 with standard USB power supply
+    - Supported form factors: 2230, 2242
+- [Waveshare PoE M.2 HAT+](https://www.waveshare.com/pi5-case-din-rail-b.htm)
+    - State: Tested
+    - SKU: 28411
+    - Use with: Raspberry Pi 5, DIN case
+    - Supported form factors: 2230, 2242
+- [52Pi P33 M.2 PoE+ HAT](https://52pi.com/products/p33-m-2-nvme-2280-poe-hat-extension-board-with-official-cooler-for-raspberry-pi-5?variant=45156837818520)
+    - State: Tested
+    - SKU: EP-0241
+    - Use with: Raspberry Pi 5, DIN case
+    - Supported form factors: 2230, 2242, 2260, 2280
+- [52Pi M.2 NVME PoE+ HAT](https://52pi.com/products/m-2-nvme-m-key-poe-hat-with-official-pi-5-active-cooler-for-raspberry-pi-5-support-m-2-nvme-ssd-2230-2242?variant=44972209012888)
+    - State: Untested
+    - SKU: EP-0240
+    - Use with: Raspberry Pi 5, DIN case
+    - Supported form factors: 2230, 2242
 
+A great review about combined HATs was made by Jeff Geerling om YouTube:
 
-
+[![PoE+ NVMe beats Raspberry Pi to the punch](http://img.youtube.com/vi/x9ceI0_r_Kg/0.jpg)](http://www.youtube.com/watch?v=x9ceI0_r_Kg "PoE+ NVMe beats Raspberry Pi to the punch")
 
