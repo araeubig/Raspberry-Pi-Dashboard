@@ -18,10 +18,16 @@ While testing the possible components, I decided to document two variants for mo
 ## Example screenshots
 ![Startup](/files/examples/startup.jpg)
 *Startup*
+
 ![Dashboard](/files/examples/dashboard.jpg)
 *Dashboard*
+
+![Dashboard](/files/examples/system_information.jpg)
+*System imformation*
+
 ![Dashboard](/files/examples/reboot.jpg)
 *Reboot*
+
 ![Dashboard](/files/examples/shutdown.jpg)
 *Shutdown*
 ## Requirements
