@@ -102,3 +102,32 @@ A great review about combined HATs was made by Jeff Geerling on YouTube:
     - Use with: Raspberry Pi 5, DIN case, standard case
 ## Assembly
 Upcoming
+## Installation
+Download this respository in your user folder with
+```shell
+sudo apt-get install git
+git clone https://github.com/araeubig/Raspberry-Pi-Dashboard
+```
+You could run the dashboard 'one-time' or as 'service'. For customizing and testing the one-time run makes sense. After customizing / configuring the service is the preffered option.
+### Run one-time
+```shell
+cd Raspberry-Pi-Dashboard
+./run.sh
+```
+Stop the running dashboard with <kbd>Control</kbd> + <kbd>C</kbd>
+### Run dashboard as service on startup
+```shell
+cd Raspberry-Pi-Dashboard
+sudo ./create_service.sh
+```
+### Stop dashboard service
+```shell
+sudo systemctl stop rpidashboard.service
+```
+### Remove dashboard service
+```shell
+cd Raspberry-Pi-Dashboard
+sudo ./remove_service.sh
+```
+## Customizing
+Upcoming
