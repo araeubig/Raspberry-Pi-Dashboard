@@ -129,5 +129,19 @@ sudo systemctl stop rpidashboard.service
 cd Raspberry-Pi-Dashboard
 sudo ./remove_service.sh
 ```
-## Customizing
+### Customizing
+Upcoming
+## 3D Models
+Upcoming
+### Printing services
+Upcoming
+### Print yourself
+Upcoming
+## To Do's
+Upcoming
+## Contribution
+Upcoming
+## Credits
+Upcoming
+## Disclaimer
 Upcoming
