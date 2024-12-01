@@ -15,6 +15,8 @@ While testing the possible components, I decided to document two variants for mo
 1. Configuration with 4M wide housing for exclusive power supply via PoE
 2. Configuration with 6M wide housing for optional power supply via 24V or 220V
 3. Configuration with standard housing for power supply via USB plug-in power supply unit without touch functionality
+## Example screenshots
+![Dashboard startup image](/examples/startup.jpg)
 ## Requirements
 - Raspberry Pi 5
 - Touch display that fits into the DIN housing / desktop case (preferably with ST7789V2 driver)
