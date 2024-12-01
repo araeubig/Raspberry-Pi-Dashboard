@@ -100,3 +100,5 @@ A great review about combined HATs was made by Jeff Geerling on YouTube:
     - State: Tested
     - SKU: N/A
     - Use with: Raspberry Pi 5, DIN case, standard case
+## Assembly
+Upcoming
