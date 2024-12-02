@@ -117,11 +117,6 @@ Upcoming
 A great review about combined HATs was made by Jeff Geerling on YouTube:
 
 [![PoE+ NVMe beats Raspberry Pi to the punch](http://img.youtube.com/vi/x9ceI0_r_Kg/0.jpg)](http://www.youtube.com/watch?v=x9ceI0_r_Kg "PoE+ NVMe beats Raspberry Pi to the punch")
-### Suitable configurations
-#### DIN case, 4M
-Upcoming
-#### Standard case
-Upcoming
 ### Accessory
 - [Waveshare Micro HDMI to HDMI Multifunctional Adapter](https://www.waveshare.com/pi5-connector-adapter.htm)
     - State: Currently untested / Upcoming
@@ -139,6 +134,21 @@ Upcoming
     - State: Tested
     - SKU: N/A
     - Use with: Raspberry Pi 5, DIN case, standard case
+### Special
+- [Oratek TOFU Board](https://tofu.oratek.com/#/?id=tofu-board)
+    - State: Tested without case / case test upcoming
+    - SKU: N/A
+    - Use with: Raspberry CM4, perhaps DIN case 6M
+    - Special features: M.2 Slot, Raspberry CM4, flexible power supply
+    
+    A great review about TOFU Board was made too by Jeff Geerling on YouTube:
+
+    [![Native M.2 NVMe on a Raspberry Pi - CM4 TOFU](http://img.youtube.com/vi/x9ceI0_r_Kg/0.jpg)](https://www.youtube.com/watch?v=m-QSQ24_8LY&t=6s "Native M.2 NVMe on a Raspberry Pi - CM4 TOFU")
+### Suitable configurations
+#### DIN case, 4M
+Upcoming
+#### Standard case
+Upcoming
 ## Assembly
 Upcoming
 ### Connecting the display
