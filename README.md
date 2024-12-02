@@ -18,7 +18,7 @@ While testing the possible components, I decided to document two variants for mo
 ## Use cases
 As already mentioned in the introduction, the aim is to use the Raspberry as a headless server (i.e. without a screen) and to place it in a DIN-compliant distribution board. There it should perform its service, installed with any system according to the user's requirements.
 
-In my case, I only need:
+In my case, I only need a 'lightweight' system with:
 - InfluxDB
 - Grafana
 
@@ -26,9 +26,8 @@ In most cases, however, the Raspberry will certainly run as a server for
 - HomeAssistant,
 - OpenHAB or
 - IOTStack (with the desired containers)
-In the end, however, this is irrelevant, as it is all about DIN-compliant installation and the dashboard.
 
-
+In the end, however, this is irrelevant, as it is all about DIN-compliant installation and the working dashboard.
 ## Example screenshots
 ### Waveshare 1.69" 240x280 display (landscape orientation)
 #### Startup
