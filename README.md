@@ -5,6 +5,8 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 <a href="/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="license" /></a>
 
 > This repository is in progress for the first documented version. The current version works perfectly, but there are still a few fine adjustments to make the configuration easier  - please be patient and visit again in some days. By searching for a solution to fulfill all important steps i found a repository as a very good starting point. I didn't create a fork because there are to many changes and enhancements. Therefore i started with this new repository. In the final README you will find all informations about the original repo, this repo and the changed parts.
+
+![First display test](/files/examples/display_test_first.jpg)
 ## About the project
 As the Raspberry is to be operated as a server in the distribution cabinet, it not only needs a DIN housing, but also a display to show the most important system information. A solution with various green and red LEDs seemed more complex to me than simply connecting a display. Another requirement was to be able to restart and shut down the Raspberry using buttons or a touch display. Last but not least, the Raspberry should not only be supplied with power via PoE, but also offer an M.2 slot for an NVMe SSD - because this is the only way to ensure long-term operation without possible SD card failures.
 
