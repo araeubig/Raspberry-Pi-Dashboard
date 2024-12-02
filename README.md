@@ -51,7 +51,7 @@ Current version beta 0.1:
   - current upload/download transfer rate
 - Value visualisation
   - entire value range from 0 to 100 in text color
-  - Set threshold for each value to switch from text color to 'alert' color. Alert color makes a fading from green to red based on the real value
+  - Set threshold for each value to switch from text color to 'alert' color. Alert color makes a fading from green to red based on the real value.
 - Switch with touch panel between
   - Dashboard
     - with configurated values
