@@ -16,7 +16,19 @@ While testing the possible components, I decided to document two variants for mo
 2. Configuration with 6M wide housing for optional power supply via 24V or 220V
 3. Configuration with standard housing for power supply via USB plug-in power supply unit without touch functionality
 ## Use cases
-Upcoming
+As already mentioned in the introduction, the aim is to use the Raspberry as a headless server (i.e. without a screen) and to place it in a DIN-compliant distribution board. There it should perform its service, installed with any system according to the user's requirements.
+
+In my case, I only need:
+- InfluxDB
+- Grafana
+
+In most cases, however, the Raspberry will certainly run as a server for
+- HomeAssistant,
+- OpenHAB or
+- IOTStack (with the desired containers)
+In the end, however, this is irrelevant, as it is all about DIN-compliant installation and the dashboard.
+
+
 ## Example screenshots
 ### Waveshare 1.69" 240x280 display (landscape orientation)
 #### Startup
@@ -31,6 +43,7 @@ Upcoming
 ![Shutdown](/files/examples/shutdown.jpg)
 ### Waveshare 1.69" 240x280 display (portrait orientation)
 Upcoming
+### Phoenix Contact 
 
 > The text is much brighter on the small displays (based on the backlight and pixel-pitch)
 ## Requirements
@@ -75,7 +88,7 @@ Upcoming
     - SKU: 24382 - 1.69inch LCD Module
     - Resolution: 240x280
     - Use with: DIN case, standard case
-- [Phoenix Contact BC Series](https://www.phoenixcontact.com/en-pc/products/electronics-housings/electronics-housings-for-raspberry-pi-applications) CURRENTLY NOT OPTIMIZED FOR RPi 5
+- [Phoenix Contact - BC DKL 2.4" Touch Display](https://www.phoenixcontact.com/en-pc/products/electronics-housings/bc-modular-electronics-housings?f=NobwRAZglgNgLgUwE4EkAmYBcYAOSD2aArgMZwD6EAhgLaxQLkDmSOYANJAzBtgAoFiZAATU6MAJ4cu8ZABUJOBFjABZAKpyAggCEAMgFFp0WUgBqVGEQQBnLMDA6AwsICMABgDs7AGwA6PzAAXU4AO1plfkFSOFFaWCkAX3ZwE0RUXlxosnI4RWVOaAQeFQFCGOE8pWNYdIVq7A1tfSNC2uQLK1t7MCd8ADdkYLCI0uzYquVEoKA)
   - State: Currently untested / Upcoming
   - SKU: 2202874
   - Use with: Raspberry Pi 5
@@ -105,7 +118,11 @@ Upcoming
 A great review about combined HATs was made by Jeff Geerling on YouTube:
 
 [![PoE+ NVMe beats Raspberry Pi to the punch](http://img.youtube.com/vi/x9ceI0_r_Kg/0.jpg)](http://www.youtube.com/watch?v=x9ceI0_r_Kg "PoE+ NVMe beats Raspberry Pi to the punch")
-
+### Suitable configurations
+#### DIN case, 4M
+Upcoming
+#### Standard case
+Upcoming
 ### Accessory
 - [Waveshare Micro HDMI to HDMI Multifunctional Adapter](https://www.waveshare.com/pi5-connector-adapter.htm)
     - State: Currently untested / Upcoming
