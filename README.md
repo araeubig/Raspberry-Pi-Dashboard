@@ -28,6 +28,8 @@ In most cases, however, the Raspberry will certainly run as a server for
 - IOTStack (with the desired containers)
 
 In the end, however, this is irrelevant, as it is all about DIN-compliant installation and the working dashboard.
+## Dashboard features
+Upcoming
 ## Example screenshots
 ### Waveshare 1.69" 240x280 display (landscape orientation)
 #### Startup
@@ -162,33 +164,37 @@ Upcoming
 Upcoming
 ## Installation
 ### Use with NVMe-SSD
-If the Raspberry Pi is used with an M.2 HAT with an NVMe-SSD installed, the NVMe-CLI tool should be installed beforehand with this command
+If the Raspberry Pi is used with an M.2 HAT with an NVMe-SSD installed, the NVMe-CLI tool should be installed beforehand with this command:
 ```shell
 sudo apt install nvme-cli
 ```
 ### Download
-Download this respository in your user folder with
+Download this respository in your user folder with:
 ```shell
 sudo apt-get install git
 git clone https://github.com/araeubig/Raspberry-Pi-Dashboard
 ```
 You could run the dashboard 'one-time' or as 'service'. For customizing and testing the one-time run makes sense. After customizing / configuring the service is the preffered option.
 ### Run one-time
+Start the dashboard with:
 ```shell
 cd Raspberry-Pi-Dashboard
 ./run.sh
 ```
 Stop the running dashboard with <kbd>⌃ Control</kbd> + <kbd>C</kbd>
-### Run dashboard as service on startup
+### Run dashboard as service
+Start the dashboard and run as service on boot with:
 ```shell
 cd Raspberry-Pi-Dashboard
 sudo ./create_service.sh
 ```
 ### Stop dashboard service
+Stop the dashboard service with:
 ```shell
 sudo systemctl stop rpidashboard.service
 ```
 ### Remove dashboard service
+Remove the dashboard service with:
 ```shell
 cd Raspberry-Pi-Dashboard
 sudo ./remove_service.sh
