@@ -15,22 +15,24 @@ While testing the possible components, I decided to document two variants for mo
 1. Configuration with 4M wide housing for exclusive power supply via PoE
 2. Configuration with 6M wide housing for optional power supply via 24V or 220V
 3. Configuration with standard housing for power supply via USB plug-in power supply unit without touch functionality
+## Use cases
+Upcoming
 ## Example screenshots
+### Waveshare 1.69" 240x280 display (landscape orientation)
+#### Startup
 ![Startup](/files/examples/startup.jpg)
-*Startup*
-
+#### Dashboard
 ![Dashboard](/files/examples/dashboard.jpg)
-*Dashboard*
+#### System information
+![System information](/files/examples/system_information.jpg)
+#### Reboot
+![Reboot](/files/examples/reboot.jpg)
+#### Shutdown
+![Shutdown](/files/examples/shutdown.jpg)
+### Waveshare 1.69" 240x280 display (portrait orientation)
+Upcoming
 
-![Dashboard](/files/examples/system_information.jpg)
-*System imformation*
-
-![Dashboard](/files/examples/reboot.jpg)
-*Reboot*
-
-![Dashboard](/files/examples/shutdown.jpg)
-*Shutdown*
-> The text is much brighter on the display (based on the backlight)
+> The text is much brighter on the small displays (based on the backlight and pixel-pitch)
 ## Requirements
 - Raspberry Pi 5
 - Touch display that fits into the DIN housing / desktop case (preferably with ST7789V2 driver)
@@ -107,7 +109,11 @@ A great review about combined HATs was made by Jeff Geerling on YouTube:
 - [Waveshare Micro HDMI to HDMI Multifunctional Adapter](https://www.waveshare.com/pi5-connector-adapter.htm)
     - State: Currently untested / Upcoming
     - SKU: 28411
-    - Use with: Raspberry Pi 5, DIN case 6M
+    - Use with: Raspberry Pi 4, Raspberry Pi 5, DIN case 6M
+- [DeskPi KL-P24 Micro HDMI to HDMI Adapter Board](https://deskpi.com/products/deskpi-kl-p24-raspberry-pi-adapter-board)
+    - State: Currently untested / Upcoming
+    - SKU: DP-0036-2pcs
+    - Use with: Raspberry Pi 4, Raspberry Pi 5, DIN case 6M
 - [Argon THRML 30mm Active Cooler](https://argon40.com/products/argon-thrml-30mm-active-cooler?variant=47734223077649)
     - State: Currently untested / Upcoming
     - SKU: N/A
@@ -117,6 +123,14 @@ A great review about combined HATs was made by Jeff Geerling on YouTube:
     - SKU: N/A
     - Use with: Raspberry Pi 5, DIN case, standard case
 ## Assembly
+Upcoming
+### Connecting the display
+Upcoming
+#### Waveshare 1.69" touch display
+Upcoming
+#### Waveshare 1.69" display
+Upcoming
+#### Phoenix Contact
 Upcoming
 ## Installation
 Download this respository in your user folder with
@@ -161,3 +175,9 @@ Upcoming
 Upcoming
 ## Disclaimer
 Upcoming
+
+```python
+row = 2
+column = 1
+
+```
