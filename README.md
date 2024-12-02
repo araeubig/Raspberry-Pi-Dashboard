@@ -24,7 +24,10 @@ In my case, I only need a 'lightweight' system with:
 - InfluxDB
 - Grafana
 
+to record data from the KNX system.
+
 In most cases, however, the Raspberry will certainly run as a server for
+- NodeRed,
 - HomeAssistant,
 - OpenHAB or
 - IOTStack (with the desired containers)
