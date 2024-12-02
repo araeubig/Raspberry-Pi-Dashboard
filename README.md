@@ -15,7 +15,7 @@ The search for the necessary components turned out to be more difficult than exp
 While testing the possible components, I decided to document two variants for mounting on a DIN rail and another variant for desktop use:
 
 1. Configuration with 4M wide housing for exclusive power supply via PoE
-2. Configuration with 6M wide housing for optional power supply via 24V or 220V
+2. Configuration with 6M wide housing for power supply via PoE, 24V or 220V
 3. Configuration with standard housing for power supply via USB plug-in power supply unit without touch functionality
 ## Use cases
 As already mentioned in the introduction, the aim is to use the Raspberry as a headless server (i.e. without a screen) and to place it in a DIN-compliant distribution board. There it should perform its service, installed with any system according to the user's requirements.
