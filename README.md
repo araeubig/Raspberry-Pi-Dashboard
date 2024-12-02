@@ -20,11 +20,9 @@ While testing the possible components, I decided to document two variants for mo
 ## Use cases
 As already mentioned in the introduction, the aim is to use the Raspberry as a headless server (i.e. without a screen) and to place it in a DIN-compliant distribution board. There it should perform its service, installed with any system according to the user's requirements.
 
-In my case, I only need a 'lightweight' system with:
+In my case, I only need a 'lightweight' system to record data from the KNX system with:
 - InfluxDB
 - Grafana
-
-to record data from the KNX system.
 
 In most cases, however, the Raspberry will certainly run as a server for
 - NodeRed,
@@ -34,8 +32,7 @@ In most cases, however, the Raspberry will certainly run as a server for
 
 In the end, however, this is irrelevant, as it is all about DIN-compliant installation and the working dashboard.
 ## Dashboard features
-
-Current version 0.1:
+Current version beta 0.1:
 - Use with ST7789V2-based displays
   - portrait or landscape orientation
   - automatic resizing of text and fields based on display
