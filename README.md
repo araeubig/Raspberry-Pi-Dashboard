@@ -29,7 +29,38 @@ In most cases, however, the Raspberry will certainly run as a server for
 
 In the end, however, this is irrelevant, as it is all about DIN-compliant installation and the working dashboard.
 ## Dashboard features
-Upcoming
+
+Current version 0.1:
+- Use with ST7789V2-based displays
+  - portrait or landscape orientation
+  - automatic resizing of text and fields based on display
+- Use with CST816-based touch panels
+  - control dashboard menu with gestures and buttons
+- Values
+  - used RAM in percent
+  - used CPU in percent
+  - used HDD in percent
+  - used SWAP in percent
+  - current CPU temperature
+  - current SSD temperature
+  - current check if Influx is alive
+  - Influx measurements of the last x-hours/days
+  - current check if Grafana is alive
+  - current upload/download transfer rate
+- Value visualisation
+  - entire value range from 0 to 100 in text color
+  - Set threshold for each value to switch from text color to 'alert' color. Alert color makes a fading from green to red based on the real value
+- Switch with touch panel between
+  - Dashboard
+    - with configurated values
+  - System information
+    - IP adress
+    - hostname
+    - Raspberry Pi version
+  - Reboot system
+  - Shutdown system 
+
+
 ## Example screenshots
 ### Waveshare 1.69" 240x280 display (landscape orientation)
 #### Startup
