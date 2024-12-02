@@ -34,7 +34,7 @@ Current version 0.1:
 - Use with ST7789V2-based displays
   - portrait or landscape orientation
   - automatic resizing of text and fields based on display
-- Use with CST816-based touch panels
+- Use with CST816T-based touch panels
   - control dashboard menu with gestures and buttons
 - Values
   - used RAM in percent
