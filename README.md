@@ -42,7 +42,8 @@ In the end, however, this is irrelevant, as it is all about DIN-compliant instal
 ![Shutdown](/files/examples/shutdown.jpg)
 ### Waveshare 1.69" 240x280 display (portrait orientation)
 Upcoming
-### Phoenix Contact 
+### Phoenix Contact 2.4" 320x240 display
+Upcoming
 
 > The text is much brighter on the small displays (based on the backlight and pixel-pitch)
 ## Requirements
@@ -114,7 +115,7 @@ Upcoming
     - Use with: Raspberry Pi 5, DIN case
     - Supported form factors: 2230, 2242
 
-A great review about combined HATs was made by Jeff Geerling on YouTube:
+A review about combined HATs was made by Jeff Geerling on YouTube:
 
 [![PoE+ NVMe beats Raspberry Pi to the punch](http://img.youtube.com/vi/x9ceI0_r_Kg/0.jpg)](http://www.youtube.com/watch?v=x9ceI0_r_Kg "PoE+ NVMe beats Raspberry Pi to the punch")
 ### Accessory
@@ -141,7 +142,7 @@ A great review about combined HATs was made by Jeff Geerling on YouTube:
     - Use with: Raspberry CM4, perhaps DIN case 6M
     - Special features: M.2 Slot, Raspberry CM4, flexible power supply
     
-    A great review about TOFU Board was made too by Jeff Geerling on YouTube:
+    A review about TOFU Board was made too by Jeff Geerling on YouTube:
 
     [![Native M.2 NVMe on a Raspberry Pi - CM4 TOFU](http://img.youtube.com/vi/x9ceI0_r_Kg/0.jpg)](https://www.youtube.com/watch?v=m-QSQ24_8LY&t=6s "Native M.2 NVMe on a Raspberry Pi - CM4 TOFU")
 ### Suitable configurations
