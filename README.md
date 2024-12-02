@@ -39,6 +39,7 @@ Upcoming
 - DIN case / standard case
 - 3D printed model of DIN Case top / desktop case cover
 - Python >= 3.9
+- NVMe-CLI Tool (if using Raspberry Pi with installed NVMe-SSD)
 ## Recommended Hardware
 ### Cases
 #### DIN mount
