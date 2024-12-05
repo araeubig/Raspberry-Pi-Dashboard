@@ -4,7 +4,7 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faraeubig%2FRaspberry-Pi-Dashboard&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
 <a href="/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="license" /></a>
 
-> This repository is in progress for the first documented version. The current version works perfectly, but there are still a few fine adjustments to make the configuration easier  - please be patient and visit again in some days. By searching for a solution to fulfill all important steps i found a repository as a very good starting point. I didn't create a fork because there are to many changes and enhancements. Therefore i started with this new repository. In the final README you will find all informations about the original repo, this repo and the changed parts.
+> This repository is in progress for the first documented version. The current version works perfectly, but there are still a few fine adjustments to make the configuration easier - please be patient and visit again in some days. By searching for a solution to fulfill all important steps i found a repository as a very good starting point. I didn't create a fork because there are to many changes and enhancements. Therefore i started with this new repository. In the final README you will find all informations about the original repo, this repo and the changed parts.
 
 ![First display test](/files/examples/display_test_first.jpg)
 ## About the project
@@ -32,7 +32,9 @@ In most cases, however, the Raspberry will certainly run as a server for
 
 In the end, however, this is irrelevant, as it is all about DIN-compliant installation and the working dashboard.
 ## Dashboard features
-Current version beta 0.1:
+### Upcoming version 0.1:
+- Record system data native in InfluxDB (without extra tools like Telegraf)
+### Current version beta 0.1:
 - Use with ST7789V2-based displays
   - portrait or landscape orientation
   - automatic resizing of text and fields based on display
@@ -61,8 +63,6 @@ Current version beta 0.1:
     - Raspberry Pi version
   - Reboot system
   - Shutdown system 
-
-
 ## Example screenshots
 ### Waveshare 1.69" 240x280 display (landscape orientation)
 #### Startup
