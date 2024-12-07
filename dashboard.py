@@ -34,6 +34,10 @@ influx_token = 'jED07ac_52dsyq0AVQWYcBkVzpfInWq6BNqIfkIjcjc2DP_BSIHDsu8kpHa_i3UI
 influx_org = 'BWS'
 influx_range_hours = -500
 
+# Grafana config
+grafana_host = 'localhost'
+grafana_port = 3000
+
 # Set the local directory
 appname = 'rpidashboard'
 localedir = './locales'
@@ -47,6 +51,8 @@ en_i18n.install()
 
 screensaver = 20
 
+# Font sizes and font type
+# https://www.github.com/adobe-fonts/source-code-pro
 background_color = '#000000'
 line_color = '#1f1f1f'
 header_size = 12
@@ -68,10 +74,8 @@ logging.basicConfig(
 def touch_callback(TP_INT):
     global Flag, released, test
     if touch_mode == 1:       
-        Flag = 1
         touch.get_point()
     elif touch_mode == 2:
-        Flag = 1
         touch.Gestures = touch.Touch_Read_Byte(0x01)
         touch.get_point()
     else:
