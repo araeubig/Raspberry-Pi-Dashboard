@@ -51,4 +51,4 @@ python3 $APPLICATION
 echo "Deactivate the virtual environment"
 deactivate
 
-echo "Virtusal environment deactivated"
+echo "Virtual environment deactivated"

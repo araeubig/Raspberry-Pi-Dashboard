@@ -10,6 +10,8 @@ import threading
 import socket
 import gettext
 
+import settings
+
 from collections import deque
 from PIL import Image, ImageDraw, ImageFont
 from influxdb_client import InfluxDBClient, Point
@@ -26,18 +28,6 @@ BL     = 18
 TP_INT = 4
 TP_RST = 17
 
-# InfluxDB config
-influx_host = 'localhost'
-influx_port = 8086
-influx_bucket = 'X1-TEST'
-influx_token = 'jED07ac_52dsyq0AVQWYcBkVzpfInWq6BNqIfkIjcjc2DP_BSIHDsu8kpHa_i3UIxLcRqrvuDIJWTZt2ALSdWw=='
-influx_org = 'BWS'
-influx_range_hours = -500
-
-# Grafana config
-grafana_host = 'localhost'
-grafana_port = 3000
-
 # Set the local directory
 appname = 'rpidashboard'
 localedir = './locales'
@@ -49,12 +39,16 @@ _ = en_i18n.gettext
 # Create the translation function
 en_i18n.install()
 
-screensaver = 20
-
 # Font sizes and font type
 # https://www.github.com/adobe-fonts/source-code-pro
 background_color = '#000000'
 line_color = '#1f1f1f'
+menu_size = 16
+menu_color = '#b8b8b8'
+menu_font = ImageFont.truetype('./fonts/SourceCodePro-Light.ttf', menu_size)
+pagenumber_size = menu_size / 3 * 2
+pagenumber_color = '#b8b8b8'
+pagenumber_font = ImageFont.truetype('./fonts/SourceCodePro-Light.ttf', pagenumber_size)
 header_size = 12
 header_color = '#737373'
 header_font = ImageFont.truetype('./fonts/SourceCodePro-Light.ttf', header_size)
@@ -131,8 +125,6 @@ def main():
     # Create the ul/dl thread and a deque of length 1 to hold the ul/dl- values
     global transfer_rate
     transfer_rate = deque(maxlen=1)
-    #global net_interface
-    # print(net_interface)
     t = threading.Thread(target=calc_ul_dl, args=(1,net_interface))
 
     # The program will exit if there are only daemonic threads left.
@@ -144,6 +136,9 @@ def main():
 
     # Start tasks one time before loop to normalize data
     high_frequency_tasks()
+    # medium_frequency_tasks()
+    # low_frequency_tasks()
+    onetime_frequency_tasks()
 
     try:
         # Get the current time (in seconds)
@@ -151,7 +146,7 @@ def main():
         # Set base variables to starting values
         skip = 0
         page = 0
-        timeout = screensaver
+        timeout = settings.timeout
 
         logging.info('Entering loop')
 
@@ -159,7 +154,8 @@ def main():
             try:
                 # Reset screensaver by gesture
                 if touch.Gestures != 0 and touch.Gestures != None:
-                    timeout = screensaver
+                    timeout = settings.timeout
+                    # page = 0
                 # Detect gesture
                 if touch.Gestures == 0x0B:
                     logging.debug('DOUBLE KLICK')   
@@ -170,40 +166,65 @@ def main():
                 elif touch.Gestures == 0x02:
                     logging.debug('LEFT')
                 elif touch.Gestures == 0x03:
-                    logging.debug('DOWN')
+                    logging.debug('DOWN') 
                     if page >= 1 and page <= 3:
                         page -= 1
-                    else:
-                        page = 0
+                    elif page == 0:
+                        page = 3
                 elif touch.Gestures == 0x04:
                     logging.debug('UP')
-                    if page >= 0 and page <= 3:
+                    if page >= 0 and page <= 2:
                         page += 1
+                    elif page == 3:
+                        page = 0
                 elif touch.Gestures == 0x05:
                     logging.debug('KLICK')
                 # Clear last gesture
                 touch.Gestures = touch.Touch_Write_Byte(0x01, 0)
                 logging.debug('Page: %i', page)
 
-                # Set screen content based on status
-                if timeout != 0 and page == 0:
-                    # Do every second
-                    high_frequency_tasks()
-                    # Do every 10th second
-                    if skip % 10 == 0:
-                        medium_frequency_tasks()
-                    # Do every 30th second
-                    if skip % 30 == 0:
-                        low_frequency_tasks()
-                    # Do every 5 minutes
-                    if skip % 300 == 0:
-                        log_frequency_tasks()
-                    # Show dashboard
-                    show_dashboard()
-                elif timeout == 0:
+                # raspberry_log
+
+                # # Set screen content based on status
+                # if timeout != 0 and page == 0:
+                #     # Do every second
+                #     high_frequency_tasks()
+                #     # Do every 10th second
+                #     if skip % 10 == 0:
+                #         medium_frequency_tasks()
+                #     # Do every 30th second
+                #     if skip % 30 == 0:
+                #         low_frequency_tasks()
+                #     # Do every 5 minutes
+                #     if skip % 60 == 0: #300
+                #         log_frequency_tasks()
+                #     # Show dashboard
+                #     show_dashboard()
+                if timeout == 0:
                     # Show alive
                     show_alive()
 
+                # Do every second
+                high_frequency_tasks()
+                # Do every 10th second
+                if skip % 10 == 0:
+                    medium_frequency_tasks()
+                # Do every 30th second
+                if skip % 30 == 0:
+                    low_frequency_tasks()
+                # Do every 5 minutes
+                if skip % 60 == 0: #300
+                    log_frequency_tasks()
+
+                # if timeout != 0 and page == 0:
+                show_dashboard()
+                #     # show_systeminfo()
+                # elif timeout != 0 and page == 1:
+                #     show_systeminfo()
+                # elif timeout != 0 and page == 2:
+                #     show_reboot()
+                # elif timeout != 0 and page == 3:
+                #     show_shutdown()
 
                 # Incremet loop counter
                 skip += 1
@@ -257,54 +278,194 @@ def show_dashboard():
     draw = ImageDraw.Draw(image1)
 
     # Draw vertical lines
-    draw.line([(image_width / 3, 0), (image_width / 3, image_height)], fill=line_color, width=2, joint=None)
-    draw.line([(image_width / 3 * 2, 0), (image_width / 3 * 2, image_height)], fill=line_color, width=2, joint=None)
+    draw.line(
+        [
+            (image_width / 3, 0),
+            (image_width / 3, image_height)
+        ],
+        fill=line_color,
+        width=2,
+        joint=None
+    )
+    draw.line(
+        [
+            (image_width / 3 * 2, 0),
+            (image_width / 3 * 2, image_height)
+        ],
+        fill=line_color,
+        width=2,
+        joint=None
+    )
 
     # Draw horizontal lines
-    draw.line([(0, image_height / 3), (image_width, image_height / 3)], fill=line_color, width=2, joint=None)
-    draw.line([(0, image_height / 3 * 2), (image_width, image_height / 3 * 2)], fill=line_color, width=2, joint=None)
+    draw.line(
+        [
+            (0, image_height / 3),
+            (image_width, image_height / 3)
+        ],
+        fill=line_color,
+        width=2,
+        joint=None
+    )
+    draw.line(
+        [
+            (0, image_height / 3 * 2),
+            (image_width, image_height / 3 * 2)
+        ],
+        fill=line_color,
+        width=2,
+        joint=None
+    )
 
     # Tile: RAM use in percent
     row = 1
     column = 1
 
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (header_size / 2))), 'RAM %', fill=header_color, font=header_font, anchor="mt")
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2), f'{int(mem.percent)}', fill=f'{value_to_hex_color(int(mem.percent))}', font=value_font, anchor="mm")
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * (row - 1) + (header_size / 2))
+        ),
+        'RAM %',
+        fill=header_color,
+        font=header_font,
+        anchor="mt"
+    )
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+        ),
+        f'{int(mem.percent)}',
+        fill=f'{value_to_hex_color(int(mem.percent))}',
+        font=value_font,
+        anchor="mm"
+    )
 
     # Tile: CPU use in percent
     row = 1
     column = 2
 
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (header_size / 2))), 'CPU %', fill=header_color, font=header_font, anchor="mt")
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2), f'{int(cpu_percent)}', fill=f'{value_to_hex_color(int(cpu_percent))}', font=value_font, anchor="mm")
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * (row - 1) + (header_size / 2))
+        ),
+        'CPU %',
+        fill=header_color,
+        font=header_font,
+        anchor="mt"
+    )
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+        ),
+        f'{int(cpu_percent)}',
+        fill=f'{value_to_hex_color(int(cpu_percent))}',
+        font=value_font,
+        anchor="mm"
+    )
 
     # Tile: Disk use in percent (boot drive)
     row = 1
     column = 3
 
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (header_size / 2))), 'HDD %', fill=header_color, font=header_font, anchor="mt")
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2), f'{int(disk.percent)}', fill=f'{value_to_hex_color(int(disk.percent))}', font=value_font, anchor="mm")
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * (row - 1) + (header_size / 2))
+        ),
+        'HDD %',
+        fill=header_color,
+        font=header_font,
+        anchor="mt"
+    )
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+        ),
+        f'{int(disk.percent)}',
+        fill=f'{value_to_hex_color(int(disk.percent))}',
+        font=value_font,
+        anchor="mm"
+    )
 
     # Tile: SWAP use in percent
     row = 2
     column = 1
 
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (header_size / 2))), 'SWAP %', fill=header_color, font=header_font, anchor="mt")
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2), f'{int(swap.percent)}', fill=f'{value_to_hex_color(int(swap.percent))}', font=value_font, anchor="mm")
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * (row - 1) + (header_size / 2))
+        ),
+        'SWAP %',
+        fill=header_color,
+        font=header_font,
+        anchor="mt"
+    )
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2),
+            f'{int(swap.percent)}',
+            fill=f'{value_to_hex_color(int(swap.percent))}',
+            font=value_font,
+            anchor="mm"
+        )
 
     # Tile: CPU temperature
     row = 2
     column = 2
 
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (header_size / 2))), 'CPU °C', fill=header_color, font=header_font, anchor="mt")
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2), f'{int(cpu_temp)}', fill=f'{value_to_hex_color(int(cpu_temp), 45)}', font=value_font, anchor="mm")
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * (row - 1) + (header_size / 2))
+        ),
+        'CPU °C',
+        fill=header_color,
+        font=header_font,
+        anchor="mt"
+    
+    )
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+        ),
+        f'{int(cpu_temp)}',
+        fill=f'{value_to_hex_color(int(cpu_temp), 45)}',
+        font=value_font,
+        anchor="mm"
+    )
 
     # Tile: SSD temperature
     row = 2
     column = 3
 
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (header_size / 2))), 'HDD °C', fill=header_color, font=header_font, anchor="mt")
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2), f'{int(ssd_temp)}', fill=f'{value_to_hex_color(int(ssd_temp))}', font=value_font, anchor="mm")
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * (row - 1) + (header_size / 2))
+        ),
+        'HDD °C',
+        fill=header_color,
+        font=header_font,
+        anchor="mt"
+    )
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+        ),
+        f'{int(ssd_temp)}',
+        fill=f'{value_to_hex_color(int(ssd_temp))}',
+        font=value_font,
+        anchor="mm"
+    )
 
     # Tile: Influx
     row = 3
@@ -315,36 +476,179 @@ def show_dashboard():
     else:
         influx_value_color = 'RED'
 
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (header_size / 2))), f'INFLUX {get_influx_range()}', fill=header_color, font=header_font, anchor="mt")
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2), f'{int(influx_meas)}', fill=influx_value_color, font=value_font, anchor="mm")
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * (row - 1) + (header_size / 2))
+        ),
+        f'INFLUX {get_influx_range()}',
+        fill=header_color,
+        font=header_font,
+        anchor="mt"
+    )
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+        ),
+        f'{int(influx_meas)}',
+        fill=influx_value_color,
+        font=value_font,
+        anchor="mm"
+    )
     
     # Tile: Grafana
     row = 3
     column = 2
 
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (header_size / 2))), 'GRAFANA', fill=header_color, font=header_font, anchor="mt")
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2), 'DOWN', fill=value_color, font=value_font, anchor="mm")
+    if grafana_status == True:
+        grafana_value_color = value_color
+        grafana_value = u"✓"
+    else:
+        grafana_value_color = 'RED'
+        grafana_value = "x"
+
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * (row - 1) + (header_size / 2))
+        ),
+        'GRAFANA',
+        fill=header_color,
+        font=header_font,
+        anchor="mt"
+    )
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+        ),
+        grafana_value,
+        fill=grafana_value_color,
+        font=value_font,
+        anchor="mm"
+    )
 
     # Tile: Network transfer
     row = 3
     column = 3
 
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (header_size / 2))), net_interface.upper(), fill=header_color, font=header_font, anchor="mt")
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * (row - 1) + (header_size / 2))
+        ),
+        net_interface.upper(),
+        fill=header_color,
+        font=header_font,
+        anchor="mt"
+    )
+
     if net_d >= 100 or net_u >= 100:
-        draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 - (value_half_size / 2 )), f"D:{net_d:.0f}", fill=value_color, font=value_half_font, anchor="mm")
-        draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 + (value_half_size / 2 )), f"U:{net_u:.0f}", fill=value_color, font=value_half_font, anchor="mm")
+        draw.text(
+            (
+                (image_width / 3 * column) - (image_width / 3 / 2),
+                (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 - (value_half_size / 2 )
+            ),
+            f"D:{net_d:4.0f}",
+            fill=value_color,
+            font=value_half_font,
+            anchor="mm"
+        )
+        draw.text(
+            (
+                (image_width / 3 * column) - (image_width / 3 / 2),
+                (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 + (value_half_size / 2 )
+            ),
+            f"U:{net_u:4.0f}",
+            fill=value_color,
+            font=value_half_font,
+            anchor="mm"
+        )
     else:
-        draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 - (value_half_size / 2 )), f"D:{net_d:.1f}", fill=value_color, font=value_half_font, anchor="mm")
-        draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 + (value_half_size / 2 )), f"U:{net_u:.1f}", fill=value_color, font=value_half_font, anchor="mm")
+        draw.text(
+            (
+                (image_width / 3 * column) - (image_width / 3 / 2),
+                (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 - (value_half_size / 2 )
+            ),
+            f"D:{net_d:4.1f}",
+            fill=value_color,
+            font=value_half_font,
+            anchor="mm"
+        )
+        draw.text(
+            (
+                (image_width / 3 * column) - (image_width / 3 / 2),
+                (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 + (value_half_size / 2 )
+            ),
+            f"U:{net_u:4.1f}",
+            fill=value_color,
+            font=value_half_font,
+            anchor="mm"
+        )
 
     # Show image
+    disp.ShowImage(image1)
+
+def show_systeminfo():
+    logging.debug("show_systeminfo()")
+
+    state = False
+
+    if state == True:
+        color_state = 'GREEN'
+    else:
+        color_state = header_color
+
+    row = 1
+    column = 2
+    menu_text = 'Info'
+    page_number = '2/4'
+    image1 = Image.new("RGB", (image_width, image_height), background_color)
+    draw = ImageDraw.Draw(image1)
+    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (menu_size / 2))), menu_text.upper(), fill=menu_color, font=menu_font, anchor="mt")
+    row = 3
+    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row - (pagenumber_size / 2))), page_number, fill=menu_color, font=pagenumber_font, anchor="mb")
+    draw.rounded_rectangle([(30,170),(125,210)], radius=2.5, fill=color_state, outline=None, width=1)
+    draw.text((77.5,190), _('Yes'), fill=value_color, font=menu_font, anchor="mm")
+    draw.rounded_rectangle([(155,170),(250,210)], radius=2.5, fill=color_state, outline=None, width=1)
+    draw.text((202.5,190), _('No'), fill=value_color, font=menu_font, anchor="mm")
+    
+
+    # draw.multiline_text((140,120), 'Das ist ein Test und ein Versuch diese Zeile länegr zu machen und zusätzlich vielleicht einen Umbruch', fill=None, font=None, anchor="ma", spacing=4, align='center', direction=None, features=None, language=None, stroke_width=0, stroke_fill=None, embedded_color=False, font_size=None)
+    
+    
     disp.ShowImage(image1)
 
 def show_reboot():
     logging.debug("show_reboot()")
 
+    row = 1
+    column = 2
+    menu_text = 'Reboot'
+    page_number = '3/4'
+    image1 = Image.new("RGB", (image_width, image_height), background_color)
+    draw = ImageDraw.Draw(image1)
+    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (menu_size / 2))), menu_text.upper(), fill=menu_color, font=menu_font, anchor="mt")
+    column = 3
+    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (menu_size / 2))), page_number, fill=menu_color, font=menu_font, anchor="mt")
+
+    disp.ShowImage(image1)
+
 def show_shutdown():
     logging.debug("show_shutdown()")
+
+    row = 1
+    column = 2
+    menu_text = 'Shutdown'
+    page_number = '4/4'
+    image1 = Image.new("RGB", (image_width, image_height), background_color)
+    draw = ImageDraw.Draw(image1)
+    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (menu_size / 2))), menu_text.upper(), fill=menu_color, font=menu_font, anchor="mt")
+    column = 3
+    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (menu_size / 2))), page_number, fill=menu_color, font=menu_font, anchor="mt")
+
+    disp.ShowImage(image1)
 
 def show_alive():
     logging.debug("show_alive()")
@@ -362,7 +666,6 @@ def show_alive():
         draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row) - (image_height / 3 / 2)), text, fill="WHITE", font=value_font, anchor="mm")
 
     disp.ShowImage(image1)
-
 
 def check_ip(host,port,timeout=2):
     sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM) #presumably
@@ -428,14 +731,14 @@ def get_influx_meas():
     if check_status_influx() == False:
         return 0
 
-    p = {"_start": datetime.timedelta(hours= influx_range_hours)}
-    host = "http://" + influx_host + ":" + str(influx_port)
-    with InfluxDBClient(url=host, token=influx_token, org=influx_org, debug=False) as client:
+    p = {"_start": datetime.timedelta(hours= settings.influx_range_hours), "_bucket": settings.influx_bucket_read}
+    host = "http://" + settings.influx_host + ":" + str(settings.influx_port)
+    with InfluxDBClient(url=host, token=settings.influx_token, org=settings.influx_org, debug=False) as client:
         try:
             query_api = client.query_api()
 
             tables = query_api.query('''
-                from(bucket:"X1-TEST") |> range(start: _start)
+                from(bucket: _bucket) |> range(start: _start)
                     |> group(columns: ["_start"])
                     |> count()
             ''', params=p)
@@ -448,14 +751,42 @@ def get_influx_meas():
                 value = 0
         except InfluxDBError as e:
             if e.response.status == 401:
-                raise Exception(f"Insufficient write permissions to 'my-bucket'.") from e
+                raise Exception(f"Insufficient read permissions to 'my-bucket'.") from e
             raise
     return value
 
 def check_status_influx():
     global influx_status
-    influx_status = check_ip(influx_host, influx_port)
+    influx_status = check_ip(settings.influx_host, settings.influx_port)
     return influx_status
+
+def create_influx_meas():
+    logging.debug("create_influx_meas()")
+
+    if check_status_influx() == False or settings.log == False:
+        return 0
+    
+    host = "http://" + settings.influx_host + ":" + str(settings.influx_port)
+
+    client = InfluxDBClient(url=host, token=settings.influx_token, org=settings.influx_org)
+    write_api = client.write_api(write_options=SYNCHRONOUS)
+
+    _point1 = Point("Decimal").tag("sensor_id", "CPU").field(_("Temperature"), cpu_temp)
+    _point2 = Point("Decimal").tag("sensor_id", "CPU").field(_("Usage"), cpu_percent)
+    _point3 = Point("Decimal").tag("sensor_id", "SSD").field(_("Temperature"), ssd_temp)
+    _point4 = Point("Decimal").tag("sensor_id", "RAM").field(_("Usage"), mem.percent)
+    _point5 = Point("Decimal").tag("sensor_id", "RAM").field(_("Usage MB"), round(mem.used / 1024 / 1024 / 1024, 2))
+    _point6 = Point("Decimal").tag("sensor_id", "SSD").field(_("Usage"), disk.percent)
+
+
+    write_api.write(bucket=settings.influx_bucket_write, record=[_point1,_point2,_point3,_point4,_point5,_point6])
+
+    client.close()
+
+def check_status_grafana():
+    global grafana_status
+    grafana_status = check_ip(settings.grafana_host, settings.grafana_port)
+    return grafana_status
 
 def high_frequency_tasks():
     logging.debug("high_frequency_tasks()")
@@ -465,7 +796,6 @@ def high_frequency_tasks():
 
     cpu_percent = get_percent_cpu()
     cpu_temp = get_temperature_cpu()
-
 
 def medium_frequency_tasks():
     logging.debug("medium_frequency_tasks()")
@@ -477,7 +807,6 @@ def medium_frequency_tasks():
     mem = psutil.virtual_memory()   
     swap = psutil.swap_memory()
     ssd_temp = get_temperature_ssd(0)
-    # create_influx_data()
 
 def low_frequency_tasks():
     logging.debug("low_frequency_tasks()")
@@ -495,12 +824,20 @@ def low_frequency_tasks():
     disk_free_tb = disk.used / 1024 / 1024 / 1024 / 1024
 
     influx_meas = get_influx_meas()
+    #create_influx_meas()
+
+    check_status_grafana()
 
 def log_frequency_tasks():
     logging.debug("log_frequency_tasks()")
+    # create_influx_meas()
 
 def onetime_frequency_tasks():
     logging.debug("onetime_frequency_tasks()")
+
+    global hostname
+
+    hostname = socket.gethostname()
 
 def value_to_hex_color(value, base=50):
     if value < base:
@@ -536,6 +873,12 @@ def get_ip_address():
         except ValueError:
             continue
     return None
+
+def get_raspberry_model() -> str:
+    with open('/proc/device-tree/model') as f:
+        model = f.read()
+        model = model[:-1]
+        return model
 
 def calc_ul_dl(dt=1, interface="eth0"):
     try:

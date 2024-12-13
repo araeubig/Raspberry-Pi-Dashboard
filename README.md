@@ -126,8 +126,7 @@ Upcoming
 - [Phoenix Contact - BC DKL 2.4" Touch Display](https://www.phoenixcontact.com/en-pc/products/electronics-housings/bc-modular-electronics-housings?f=NobwRAZglgNgLgUwE4EkAmYBcYAOSD2aArgMZwD6EAhgLaxQLkDmSOYANJAzBtgAoFiZAATU6MAJ4cu8ZABUJOBFjABZAKpyAggCEAMgFFp0WUgBqVGEQQBnLMDA6AwsICMABgDs7AGwA6PzAAXU4AO1plfkFSOFFaWCkAX3ZwE0RUXlxosnI4RWVOaAQeFQFCGOE8pWNYdIVq7A1tfSNC2uQLK1t7MCd8ADdkYLCI0uzYquVEoKA)
   - State: Currently untested / Upcoming
   - SKU: 2202874
-  - Use with: Raspberry Pi 5
-  - Size: 6M
+  - Use with: Phoenix Contact DIN case 6M
 ### HAT's
 - [Raspberry Pi M.2 HAT+](https://www.raspberrypi.com/products/m2-hat-plus/)
     - State: Tested
@@ -142,7 +141,7 @@ Upcoming
 - [52Pi P33 M.2 PoE+ HAT](https://52pi.com/products/p33-m-2-nvme-2280-poe-hat-extension-board-with-official-cooler-for-raspberry-pi-5?variant=45156837818520)
     - State: Tested
     - SKU: EP-0241
-    - Use with: Raspberry Pi 5, DIN case
+    - Use with: Raspberry Pi 5, DIN case 6M (Doesn't fit in 4M case)
     - Supported form factors: 2230, 2242, 2260, 2280
 - [52Pi M.2 NVME PoE+ HAT](https://52pi.com/products/m-2-nvme-m-key-poe-hat-with-official-pi-5-active-cooler-for-raspberry-pi-5-support-m-2-nvme-ssd-2230-2242?variant=44972209012888)
     - State: Currently untested / Upcoming
@@ -150,7 +149,7 @@ Upcoming
     - Use with: Raspberry Pi 5, DIN case
     - Supported form factors: 2230, 2242
 
-A review about combined HATs was made by Jeff Geerling on YouTube:
+A review about combined HATs was made by Jeff Geerling [GitHub](https://github.com/geerlingguy) / [Blog](https://www.jeffgeerling.com) on YouTube:
 
 [![PoE+ NVMe beats Raspberry Pi to the punch](http://img.youtube.com/vi/x9ceI0_r_Kg/0.jpg)](http://www.youtube.com/watch?v=x9ceI0_r_Kg "PoE+ NVMe beats Raspberry Pi to the punch")
 ### Accessory
@@ -179,9 +178,11 @@ A review about combined HATs was made by Jeff Geerling on YouTube:
     
     A review about TOFU Board was made too by Jeff Geerling on YouTube:
 
-    [![Native M.2 NVMe on a Raspberry Pi - CM4 TOFU](http://img.youtube.com/vi/x9ceI0_r_Kg/0.jpg)](https://www.youtube.com/watch?v=m-QSQ24_8LY&t=6s "Native M.2 NVMe on a Raspberry Pi - CM4 TOFU")
+    [![Native M.2 NVMe on a Raspberry Pi - CM4 TOFU](http://img.youtube.com/vi/m-QSQ24_8LY/0.jpg)](https://www.youtube.com/watch?v=m-QSQ24_8LY "Native M.2 NVMe on a Raspberry Pi - CM4 TOFU")
 ### Suitable configurations
 #### DIN case, 4M
+Upcoming
+#### DIN case, 6M
 Upcoming
 #### Standard case
 Upcoming
