@@ -58,7 +58,9 @@ value_font = ImageFont.truetype('./fonts/SourceCodePro-Regular.ttf', value_size)
 value_half_size = value_size / 2
 value_half_font = ImageFont.truetype('./fonts/SourceCodePro-Regular.ttf', value_half_size)
 
+testvar = 17
 
+# Define logging level
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
     level=logging.DEBUG,
@@ -75,9 +77,6 @@ def touch_callback(TP_INT):
     else:
         touch.Gestures = touch.Touch_Read_Byte(0x01)
 
-# Set touch mode
-touch_mode = 2
-
 def set_display():
     global disp
     # Display with hardware SPI:
@@ -91,7 +90,8 @@ def set_display():
 
 def set_touch():
     global touch, touch_mode
-
+    # Set touch mode
+    touch_mode = 2
     # Touch with hardware I2C
     touch = Touch_1inch69.Touch_1inch69()
     # Initialize touch library.
@@ -117,7 +117,11 @@ else:
 def main():
     logging.info('Start dashboard application')
 
-    global skip    
+    global skip
+    global do_reboot
+    global testvar
+
+    do_reboot = None
 
     # Get IP adress and set active network interface for later use
     get_ip_address()
@@ -136,7 +140,7 @@ def main():
 
     # Start tasks one time before loop to normalize data
     high_frequency_tasks()
-    # medium_frequency_tasks()
+    medium_frequency_tasks()
     # low_frequency_tasks()
     onetime_frequency_tasks()
 
@@ -145,7 +149,8 @@ def main():
         next_time = time.time() + 1
         # Set base variables to starting values
         skip = 0
-        page = 0
+        page = 1
+        do_reboot = ''
         timeout = settings.timeout
 
         logging.info('Entering loop')
@@ -153,12 +158,12 @@ def main():
         while True:
             try:
                 # Reset screensaver by gesture
-                if touch.Gestures != 0 and touch.Gestures != None:
+                if timeout == 0 and touch.Gestures != 0 and touch.Gestures != None:
                     timeout = settings.timeout
-                    # page = 0
+                    page = 1
                 # Detect gesture
                 if touch.Gestures == 0x0B:
-                    logging.debug('DOUBLE KLICK')   
+                    logging.debug('DOUBLE KLICK')
                 elif touch.Gestures == 0x0C:
                     logging.debug('LONG PRESS')
                 elif touch.Gestures == 0x01:
@@ -167,42 +172,30 @@ def main():
                     logging.debug('LEFT')
                 elif touch.Gestures == 0x03:
                     logging.debug('DOWN') 
-                    if page >= 1 and page <= 3:
+                    if page >= 2 and page <= 4:
                         page -= 1
-                    elif page == 0:
-                        page = 3
+                    elif page == 1:
+                        page = 4
                 elif touch.Gestures == 0x04:
                     logging.debug('UP')
-                    if page >= 0 and page <= 2:
+                    if page >= 1 and page <= 3:
                         page += 1
-                    elif page == 3:
-                        page = 0
+                    elif page == 4:
+                        page = 1
                 elif touch.Gestures == 0x05:
                     logging.debug('KLICK')
+
+                # print(touch.X_point)
+                # print(touch.Y_point) # 40-218 NO # 40-30 YES
+                
                 # Clear last gesture
                 touch.Gestures = touch.Touch_Write_Byte(0x01, 0)
-                logging.debug('Page: %i', page)
 
-                # raspberry_log
-
-                # # Set screen content based on status
-                # if timeout != 0 and page == 0:
-                #     # Do every second
-                #     high_frequency_tasks()
-                #     # Do every 10th second
-                #     if skip % 10 == 0:
-                #         medium_frequency_tasks()
-                #     # Do every 30th second
-                #     if skip % 30 == 0:
-                #         low_frequency_tasks()
-                #     # Do every 5 minutes
-                #     if skip % 60 == 0: #300
-                #         log_frequency_tasks()
-                #     # Show dashboard
-                #     show_dashboard()
                 if timeout == 0:
+                    page = 0
                     # Show alive
-                    show_alive()
+                    
+                logging.debug('Page: %i', page)
 
                 # Do every second
                 high_frequency_tasks()
@@ -213,18 +206,41 @@ def main():
                 if skip % 30 == 0:
                     low_frequency_tasks()
                 # Do every 5 minutes
-                if skip % 60 == 0: #300
+                if skip % 60 == 0 and settings.log == True : #300
                     log_frequency_tasks()
 
-                # if timeout != 0 and page == 0:
-                show_dashboard()
-                #     # show_systeminfo()
-                # elif timeout != 0 and page == 1:
-                #     show_systeminfo()
-                # elif timeout != 0 and page == 2:
-                #     show_reboot()
-                # elif timeout != 0 and page == 3:
-                #     show_shutdown()
+                # Set screen content based on status
+                if timeout == 0 and page == 0:
+                    show_alive()
+                if timeout != 0 and page == 1:
+                    show_dashboard()
+                elif timeout != 0 and page == 2:
+                    show_systeminfo()
+                elif (timeout != 0 and
+                      page == 3 and
+                     (touch.X_point > 20 and
+                      touch.X_point < 60) and
+                     (touch.Y_point > 155 and
+                      touch.Y_point < 250)):
+                        print('No')
+                        page = 1
+                        testvar = 99
+                elif (timeout != 0 and
+                      page == 3 and
+                     (touch.X_point > 20 and
+                      touch.X_point < 60) and
+                     (touch.Y_point > 30 and
+                      touch.Y_point < 125)):
+                        print('Yes')
+                        # os.system('systemctl reboot -i')
+                        subprocess.run(["reboot", "-i"])
+                        # subprocess.run(["shutdown", "now"])
+                        testvar = 300
+                elif (timeout != 0 and
+                      page == 3):
+                        show_reboot()
+                elif timeout != 0 and page == 4:
+                    show_shutdown()
 
                 # Incremet loop counter
                 skip += 1
@@ -359,7 +375,7 @@ def show_dashboard():
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+            (image_height / 3 * row) - (image_height / 3 / 2) + (header_size / 2)
         ),
         f'{int(cpu_percent)}',
         fill=f'{value_to_hex_color(int(cpu_percent))}',
@@ -376,7 +392,7 @@ def show_dashboard():
             (image_width / 3 * column) - (image_width / 3 / 2),
             (image_height / 3 * (row - 1) + (header_size / 2))
         ),
-        'HDD %',
+        'SSD %',
         fill=header_color,
         font=header_font,
         anchor="mt"
@@ -451,7 +467,7 @@ def show_dashboard():
             (image_width / 3 * column) - (image_width / 3 / 2),
             (image_height / 3 * (row - 1) + (header_size / 2))
         ),
-        'HDD °C',
+        'SSD °C',
         fill=header_color,
         font=header_font,
         anchor="mt"
@@ -496,6 +512,17 @@ def show_dashboard():
         font=value_font,
         anchor="mm"
     )
+    # Test for text information at field bottom. Requires layout change of value to the real middle
+    # draw.text(
+    #     (
+    #         (image_width / 3 * column) - (image_width / 3 / 2),
+    #         (image_height / 3 * (row) - (header_size / 2))
+    #     ),
+    #     'LOG: OFF',
+    #     fill=header_color,
+    #     font=header_font,
+    #     anchor="mb"
+    # )
     
     # Tile: Grafana
     row = 3
@@ -593,35 +620,108 @@ def show_dashboard():
 def show_systeminfo():
     logging.debug("show_systeminfo()")
 
-    state = False
-
-    if state == True:
-        color_state = 'GREEN'
-    else:
-        color_state = header_color
 
     row = 1
     column = 2
     menu_text = 'Info'
     page_number = '2/4'
-    image1 = Image.new("RGB", (image_width, image_height), background_color)
+    image1 = Image.new(
+        "RGB", (image_width, image_height), background_color)
     draw = ImageDraw.Draw(image1)
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (menu_size / 2))), menu_text.upper(), fill=menu_color, font=menu_font, anchor="mt")
-    row = 3
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row - (pagenumber_size / 2))), page_number, fill=menu_color, font=pagenumber_font, anchor="mb")
-    draw.rounded_rectangle([(30,170),(125,210)], radius=2.5, fill=color_state, outline=None, width=1)
-    draw.text((77.5,190), _('Yes'), fill=value_color, font=menu_font, anchor="mm")
-    draw.rounded_rectangle([(155,170),(250,210)], radius=2.5, fill=color_state, outline=None, width=1)
-    draw.text((202.5,190), _('No'), fill=value_color, font=menu_font, anchor="mm")
-    
 
-    # draw.multiline_text((140,120), 'Das ist ein Test und ein Versuch diese Zeile länegr zu machen und zusätzlich vielleicht einen Umbruch', fill=None, font=None, anchor="ma", spacing=4, align='center', direction=None, features=None, language=None, stroke_width=0, stroke_fill=None, embedded_color=False, font_size=None)
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * (row - 1) + (menu_size / 2))
+        ),
+        menu_text.upper(),
+        fill=menu_color,
+        font=menu_font,
+        anchor="mt"
+    )
+
+    row = 3
+
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row - (pagenumber_size / 2))
+        ),
+        page_number,
+        fill=menu_color,
+        font=pagenumber_font,
+        anchor="mb"
+    )
     
+    row = 1
+
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 # - (value_half_size / 2 )
+        ),
+        f'{hostname}.local',
+        fill=f'{value_to_hex_color(int(mem.percent))}',
+        font=value_font,
+        anchor="mm"
+    )
+
+    row = 2
+
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row) - (image_height / 3 / 2) # + header_size / 2 # + (value_half_size / 2 )
+        ),
+        f'{ip_address}',
+        fill=f'{value_to_hex_color(int(mem.percent))}',
+        font=value_font,
+        anchor="mm"
+    )
+
+    row = 3
+
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 - (value_half_size / 2 )
+        ),
+        f'{model}',
+        fill=f'{value_to_hex_color(int(mem.percent))}',
+        font=value_half_font,
+        anchor="mm"
+    )
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 + (value_half_size / 2 )
+        ),
+        _('with') + f' {ram}' + 'MB RAM',
+        fill=f'{value_to_hex_color(int(mem.percent))}',
+        font=value_half_font,
+        anchor="mm"
+    )
     
     disp.ShowImage(image1)
 
 def show_reboot():
     logging.debug("show_reboot()")
+
+    # global do_reboot
+
+
+    print(testvar)
+
+    # if state == 'Y':
+    #     color_state_yes = 'GREEN'
+    #     color_state_no = header_color
+    # elif state == 'N':
+    #     color_state_yes = header_color
+    #     color_state_no = 'GREEN'
+    # elif state == 'E':
+    color_state_yes = header_color
+    color_state_no = header_color
+
 
     row = 1
     column = 2
@@ -629,9 +729,27 @@ def show_reboot():
     page_number = '3/4'
     image1 = Image.new("RGB", (image_width, image_height), background_color)
     draw = ImageDraw.Draw(image1)
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (menu_size / 2))), menu_text.upper(), fill=menu_color, font=menu_font, anchor="mt")
-    column = 3
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (menu_size / 2))), page_number, fill=menu_color, font=menu_font, anchor="mt")
+
+    draw.text(
+        (
+            (image_width / 3 * column) - (image_width / 3 / 2),
+            (image_height / 3 * (row - 1) + (menu_size / 2))
+        ),
+        menu_text.upper(),
+        fill=menu_color,
+        font=menu_font,
+        anchor="mt"
+    )
+
+    row = 3
+
+    draw.text(
+        ((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row - (pagenumber_size / 2))), page_number, fill=menu_color, font=pagenumber_font, anchor="mb")
+
+    draw.rounded_rectangle([(30,170),(125,210)], radius=2.5, fill=color_state_yes, outline=None, width=1)
+    draw.text((77.5,190), _('Yes'), fill=value_color, font=menu_font, anchor="mm")
+    draw.rounded_rectangle([(155,170),(250,210)], radius=2.5, fill=color_state_no, outline=None, width=1)
+    draw.text((202.5,190), _('No'), fill=value_color, font=menu_font, anchor="mm")
 
     disp.ShowImage(image1)
 
@@ -645,8 +763,13 @@ def show_shutdown():
     image1 = Image.new("RGB", (image_width, image_height), background_color)
     draw = ImageDraw.Draw(image1)
     draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (menu_size / 2))), menu_text.upper(), fill=menu_color, font=menu_font, anchor="mt")
-    column = 3
-    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * (row - 1) + (menu_size / 2))), page_number, fill=menu_color, font=menu_font, anchor="mt")
+    row = 3
+    draw.text(((image_width / 3 * column) - (image_width / 3 / 2),(image_height / 3 * row - (pagenumber_size / 2))), page_number, fill=menu_color, font=pagenumber_font, anchor="mb")
+
+    # draw.rounded_rectangle([(30,170),(125,210)], radius=2.5, fill=color_state, outline=None, width=1)
+    # draw.text((77.5,190), _('Yes'), fill=value_color, font=menu_font, anchor="mm")
+    # draw.rounded_rectangle([(155,170),(250,210)], radius=2.5, fill=color_state, outline=None, width=1)
+    # draw.text((202.5,190), _('No'), fill=value_color, font=menu_font, anchor="mm")
 
     disp.ShowImage(image1)
 
@@ -705,21 +828,23 @@ def get_temperature_ssd(num):
     return float(ssd_temp)
 
 def get_influx_range():
-    global influx_range_hours
+    # global influx_range_hours
 
     try:
-        if influx_range_hours is None:
+        if settings.influx_range_hours is None:
             print("is none")
-            influx_range_hours = -24
+            hours = -24
+        else:
+            hours = settings.influx_range_hours
     except NameError:
         print("not set")
-        influx_range_hours = -24
+        hours = -24
 
-    if influx_range_hours > -24:
-        range = str(influx_range_hours) + _('h')
+    if hours > -24:
+        range = str(hours) + _('h')
         return range
     else:
-        value = influx_range_hours / 24
+        value = hours / 24
         if int(value) == value:
             y = int(value)
         else:
@@ -778,7 +903,6 @@ def create_influx_meas():
     _point5 = Point("Decimal").tag("sensor_id", "RAM").field(_("Usage MB"), round(mem.used / 1024 / 1024 / 1024, 2))
     _point6 = Point("Decimal").tag("sensor_id", "SSD").field(_("Usage"), disk.percent)
 
-
     write_api.write(bucket=settings.influx_bucket_write, record=[_point1,_point2,_point3,_point4,_point5,_point6])
 
     client.close()
@@ -824,20 +948,25 @@ def low_frequency_tasks():
     disk_free_tb = disk.used / 1024 / 1024 / 1024 / 1024
 
     influx_meas = get_influx_meas()
-    #create_influx_meas()
+    create_influx_meas()
 
     check_status_grafana()
 
 def log_frequency_tasks():
     logging.debug("log_frequency_tasks()")
-    # create_influx_meas()
+    
+    create_influx_meas()
 
 def onetime_frequency_tasks():
     logging.debug("onetime_frequency_tasks()")
 
     global hostname
+    global model
+    global ram
 
     hostname = socket.gethostname()
+    model = get_raspberry_model()
+    ram = int(round(mem.total / 1024 / 1024 / 1000, 0))
 
 def value_to_hex_color(value, base=50):
     if value < base:

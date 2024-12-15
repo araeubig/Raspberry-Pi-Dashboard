@@ -4,13 +4,13 @@ A configurable LCD dashboard with touch functionality for headless Raspberry Pi 
 <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faraeubig%2FRaspberry-Pi-Dashboard&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
 <a href="/LICENSE"><img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="license" /></a>
 
-> This repository is in progress for the first documented version. The current version works perfectly, but there are still a few fine adjustments to make the configuration easier - please be patient and visit again in some days. By searching for a solution to fulfill all important steps i found a repository as a very good starting point. I didn't create a fork because there are to many changes and enhancements. Therefore i started with this new repository. In the final README you will find all informations about the original repo, this repo and the changed parts.
+> This repository is in progress for the first running and documented version. The current version works perfectly, but there are still a few fine adjustments to make the configuration easier - please be patient and visit again in some days. By searching for a solution to fulfill all important steps i found a repository as a very good starting point. I didn't create a fork because there are to many changes and enhancements. Therefore i started with this new repository. In the final README you will find all informations about the original repo, this repo and the changed parts.
 
 ![First display test](/files/examples/display_test_first.jpg)
 ## About the project
 As the Raspberry is to be operated as a server in the distribution cabinet, it not only needs a DIN housing, but also a display to show the most important system information. A solution with various green and red LEDs seemed more complex to me than simply connecting a display. Another requirement was to be able to restart and shut down the Raspberry using buttons or a touch display. Last but not least, the Raspberry should not only be supplied with power via PoE, but also offer an M.2 slot for an NVMe SSD - because this is the only way to ensure long-term operation without possible SD card failures. In addition, the space required for operation via PoE is reduced as there is no need for an additional power supply unit.
 
-The search for the necessary components turned out to be more difficult than expected. The market offers only a few DIN housings for the Raspberry Pi - espacially for the model 5, and there are only a few displays with a touch option that are small enough to fit into the housing. The range of combined PoE-M.2 HATS is manageable, but more than sufficient.
+The search for the necessary components turned out to be more difficult than expected. The market offers only a few DIN housings for the Raspberry Pi - espacially for the model 5, and there are only a few displays with a touch option that are small enough to fit into the housing. The range of combined PoE-M.2 HAT's is manageable, but more than sufficient.
 
 While testing the possible components, I decided to document two variants for mounting on a DIN rail and another variant for desktop use:
 
@@ -43,7 +43,7 @@ In the end, however, this is irrelevant, as it is all about DIN-compliant instal
 - Values
   - used RAM in percent
   - used CPU in percent
-  - used HDD in percent
+  - used SSD in percent
   - used SWAP in percent
   - current CPU temperature
   - current SSD temperature
@@ -169,7 +169,7 @@ A review about combined HATs was made by Jeff Geerling [GitHub](https://github.c
     - State: Tested
     - SKU: N/A
     - Use with: Raspberry Pi 5, DIN case, standard case
-### Special
+### Specials (with Raspberry CM4/5 module)
 - [Oratek TOFU Board](https://tofu.oratek.com/#/?id=tofu-board)
     - State: Tested without case / case test upcoming
     - SKU: N/A
