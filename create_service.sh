@@ -31,7 +31,7 @@ chmod +x "$REMOVE_SCRIPT"
 cat <<EOF > $SERVICE_FILE
 [Unit]
 Description=Run Raspberry Pi Dashboard
-After=network.target
+After=multi-user.target
 
 [Service]
 ExecStart=$RUN_SCRIPT
