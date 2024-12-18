@@ -217,14 +217,14 @@ def main():
                 elif timeout != 0 and page == 2:
                     show_systeminfo()
                 elif (timeout != 0 and
-                      page == 3 and
+                      (page == 3 or page == 4) and
                      (touch.X_point > 20 and
                       touch.X_point < 60) and
                      (touch.Y_point > 155 and
                       touch.Y_point < 250)):
                         print('No')
                         page = 1
-                        testvar = 99
+                        # testvar = 99
                 elif (timeout != 0 and
                       page == 3 and
                      (touch.X_point > 20 and
@@ -232,10 +232,15 @@ def main():
                      (touch.Y_point > 30 and
                       touch.Y_point < 125)):
                         print('Yes')
-                        # os.system('systemctl reboot -i')
                         subprocess.run(["reboot", "-i"])
-                        # subprocess.run(["shutdown", "now"])
-                        testvar = 300
+                elif (timeout != 0 and
+                      page == 4 and
+                     (touch.X_point > 20 and
+                      touch.X_point < 60) and
+                     (touch.Y_point > 30 and
+                      touch.Y_point < 125)):
+                        print('Yes')
+                        subprocess.run(["shutdown", "now"])
                 elif (timeout != 0 and
                       page == 3):
                         show_reboot()
@@ -827,6 +832,25 @@ def get_temperature_ssd(num):
         ssd_temp = '0'
     return float(ssd_temp)
 
+def get_fan_details():
+
+    # value = subprocess.call(["cat /sys/devices/platform/cooling_fan/hwmon/*/pwm1"])
+
+    value = subprocess.Popen(["cat", "/sys/devices/platform/cooling_fan/hwmon/*/pwm1"], stdout=subprocess.PIPE)
+
+    print(value)
+
+    # fans = psutil.sensors_fans()
+    # if not fans:
+    #     print("no fans detected")
+    #     return
+    # for name, entries in fans.items():
+    #     print(name)
+    #     for entry in entries:
+    #         print("    %-20s %s RPM" % (entry.label or name, entry.current))
+    #     print()
+
+
 def get_influx_range():
     # global influx_range_hours
 
@@ -931,6 +955,10 @@ def medium_frequency_tasks():
     mem = psutil.virtual_memory()   
     swap = psutil.swap_memory()
     ssd_temp = get_temperature_ssd(0)
+
+    rpm = get_fan_details()
+
+    print(rpm)
 
 def low_frequency_tasks():
     logging.debug("low_frequency_tasks()")
