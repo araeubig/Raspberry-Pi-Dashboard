@@ -836,9 +836,9 @@ def get_fan_details():
 
     # value = subprocess.call(["cat /sys/devices/platform/cooling_fan/hwmon/*/pwm1"])
 
-    value = subprocess.Popen(["cat", "/sys/devices/platform/cooling_fan/hwmon/*/pwm1"], stdout=subprocess.PIPE)
+    # value = subprocess.Popen(["cat", "/sys/devices/platform/cooling_fan/hwmon/*/pwm1"], stdout=subprocess.PIPE)
 
-    print(value)
+    # print(value)
 
     # fans = psutil.sensors_fans()
     # if not fans:
