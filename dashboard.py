@@ -523,7 +523,7 @@ def show_dashboard():
     #         (image_width / 3 * column) - (image_width / 3 / 2),
     #         (image_height / 3 * (row) - (header_size / 2))
     #     ),
-    #     'LOG: OFF',
+    #     f'FAN {fan_percent}%', #'LOG: OFF',
     #     fill=header_color,
     #     font=header_font,
     #     anchor="mb"
@@ -834,25 +834,21 @@ def get_temperature_ssd(num):
 
 def get_fan_details():
 
-    # value = subprocess.call(["cat /sys/devices/platform/cooling_fan/hwmon/*/pwm1"])
-
-    # value = subprocess.Popen(["cat", "/sys/devices/platform/cooling_fan/hwmon/*/pwm1"], stdout=subprocess.PIPE)
-
-    # print(value)
+    value = subprocess.run(['cat', '/sys/devices/platform/cooling_fan/hwmon/hwmon3/pwm1'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    value_percent = round((int(value.stdout) / 255) * 100)
 
     # fans = psutil.sensors_fans()
+    # print(fans)
     # if not fans:
     #     print("no fans detected")
     #     return
     # for name, entries in fans.items():
-    #     print(name)
     #     for entry in entries:
-    #         print("    %-20s %s RPM" % (entry.label or name, entry.current))
-    #     print()
+    #         print(entry.current)
 
+    return value_percent
 
 def get_influx_range():
-    # global influx_range_hours
 
     try:
         if settings.influx_range_hours is None:
@@ -951,14 +947,13 @@ def medium_frequency_tasks():
     global mem
     global swap
     global ssd_temp
+    global fan_percent
 
     mem = psutil.virtual_memory()   
     swap = psutil.swap_memory()
     ssd_temp = get_temperature_ssd(0)
 
-    rpm = get_fan_details()
-
-    print(rpm)
+    fan_percent = get_fan_details()
 
 def low_frequency_tasks():
     logging.debug("low_frequency_tasks()")
