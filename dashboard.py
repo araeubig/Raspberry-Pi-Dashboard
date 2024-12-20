@@ -294,6 +294,16 @@ def show_dashboard():
     # Set backlight to 100%
     disp.bl_DutyCycle(100)
 
+    # Calculate details offset
+    # If settings.details == True:
+    #     offset = 10
+    # else:
+
+    if settings.details == True:
+        offset = 5
+    elif settings.details == False:
+        offset = 10
+
     # Draw background
     image1 = Image.new("RGB", (image_width, image_height), background_color)
     draw = ImageDraw.Draw(image1)
@@ -462,6 +472,18 @@ def show_dashboard():
         font=value_font,
         anchor="mm"
     )
+    # Test for text information at field bottom. Requires layout change of value to the real middle
+    # draw.text(
+    #     (
+    #         (image_width / 3 * column) - (image_width / 3 / 2),
+    #         (image_height / 3 * (row) - (header_size / 2))
+    #     ),
+    #     f'LÜFTER
+    #       {fan_percent}%', #'LOG: OFF',
+    #     fill=header_color,
+    #     font=header_font,
+    #     anchor="mb"
+    # )
 
     # Tile: SSD temperature
     row = 2

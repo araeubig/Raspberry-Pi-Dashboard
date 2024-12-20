@@ -4,6 +4,9 @@ timeout = 60
 # Enable logging of system data
 log = False
 
+# Enable value details
+details = True
+
 # InfluxDB config
 influx_host = 'localhost'
 influx_port = 8086
