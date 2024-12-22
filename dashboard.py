@@ -12,6 +12,8 @@ import gettext
 
 import settings
 
+from psutil._common import bytes2human
+
 from collections import deque
 from PIL import Image, ImageDraw, ImageFont
 from influxdb_client import InfluxDBClient, Point
@@ -63,7 +65,7 @@ testvar = 17
 # Define logging level
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
-    level=logging.DEBUG,
+    level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S')
 
 # Define touch callback
@@ -184,9 +186,6 @@ def main():
                         page = 1
                 elif touch.Gestures == 0x05:
                     logging.debug('KLICK')
-
-                # print(touch.X_point)
-                # print(touch.Y_point) # 40-218 NO # 40-30 YES
                 
                 # Clear last gesture
                 touch.Gestures = touch.Touch_Write_Byte(0x01, 0)
@@ -222,16 +221,13 @@ def main():
                       touch.X_point < 60) and
                      (touch.Y_point > 155 and
                       touch.Y_point < 250)):
-                        print('No')
                         page = 1
-                        # testvar = 99
                 elif (timeout != 0 and
                       page == 3 and
                      (touch.X_point > 20 and
                       touch.X_point < 60) and
                      (touch.Y_point > 30 and
                       touch.Y_point < 125)):
-                        print('Yes')
                         subprocess.run(["reboot", "-i"])
                 elif (timeout != 0 and
                       page == 4 and
@@ -239,7 +235,6 @@ def main():
                       touch.X_point < 60) and
                      (touch.Y_point > 30 and
                       touch.Y_point < 125)):
-                        print('Yes')
                         subprocess.run(["shutdown", "now"])
                 elif (timeout != 0 and
                       page == 3):
@@ -294,15 +289,11 @@ def show_dashboard():
     # Set backlight to 100%
     disp.bl_DutyCycle(100)
 
-    # Calculate details offset
-    # If settings.details == True:
-    #     offset = 10
-    # else:
-
+    # Calculate offset
     if settings.details == True:
-        offset = 5
+        offset = 0
     elif settings.details == False:
-        offset = 10
+        offset = header_size / 2
 
     # Draw background
     image1 = Image.new("RGB", (image_width, image_height), background_color)
@@ -355,23 +346,34 @@ def show_dashboard():
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * (row - 1) + (header_size / 2))
+            (image_height / 3 * (row - 1) + (header_size / 2) + (header_size / 4))
         ),
         'RAM %',
         fill=header_color,
         font=header_font,
-        anchor="mt"
+        anchor="mm"
     )
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+            (image_height / 3 * row) - (image_height / 3 / 2) + offset
         ),
-        f'{int(mem.percent)}',
-        fill=f'{value_to_hex_color(int(mem.percent))}',
+        f'{int(mem_percent)}',
+        fill=f'{value_to_hex_color(int(mem_percent))}',
         font=value_font,
         anchor="mm"
     )
+    if settings.details == True:
+        draw.text(
+            (
+                (image_width / 3 * column) - (image_width / 3 / 2),
+                (image_height / 3 * (row) - (header_size / 2) - (header_size / 4))
+            ),
+            mem_str,
+            fill=header_color,
+            font=header_font,
+            anchor="mm"
+        )
 
     # Tile: CPU use in percent
     row = 1
@@ -380,23 +382,34 @@ def show_dashboard():
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * (row - 1) + (header_size / 2))
+            (image_height / 3 * (row - 1) + (header_size / 2) + (header_size / 4))
         ),
         'CPU %',
         fill=header_color,
         font=header_font,
-        anchor="mt"
+        anchor="mm"
     )
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * row) - (image_height / 3 / 2) + (header_size / 2)
+            (image_height / 3 * row) - (image_height / 3 / 2) + offset
         ),
         f'{int(cpu_percent)}',
         fill=f'{value_to_hex_color(int(cpu_percent))}',
         font=value_font,
         anchor="mm"
     )
+    if settings.details == True:
+        draw.text(
+            (
+                (image_width / 3 * column) - (image_width / 3 / 2),
+                (image_height / 3 * (row) - (header_size / 2) - (header_size / 4))
+            ),
+            _('Cores').upper() + f':{cores}',
+            fill=header_color,
+            font=header_font,
+            anchor="mm"
+        )
 
     # Tile: Disk use in percent (boot drive)
     row = 1
@@ -405,23 +418,34 @@ def show_dashboard():
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * (row - 1) + (header_size / 2))
+            (image_height / 3 * (row - 1) + (header_size / 2) + (header_size / 4))
         ),
         'SSD %',
         fill=header_color,
         font=header_font,
-        anchor="mt"
+        anchor="mm"
     )
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+            (image_height / 3 * row) - (image_height / 3 / 2) + offset
         ),
         f'{int(disk.percent)}',
         fill=f'{value_to_hex_color(int(disk.percent))}',
         font=value_font,
         anchor="mm"
     )
+    if settings.details == True:
+        draw.text(
+            (
+                (image_width / 3 * column) - (image_width / 3 / 2),
+                (image_height / 3 * (row) - (header_size / 2) - (header_size / 4))
+            ),
+            _('test'),
+            fill=header_color,
+            font=header_font,
+            anchor="mm"
+        )
 
     # Tile: SWAP use in percent
     row = 2
@@ -430,22 +454,23 @@ def show_dashboard():
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * (row - 1) + (header_size / 2))
+            (image_height / 3 * (row - 1) + (header_size / 2) + (header_size / 4))
         ),
         'SWAP %',
         fill=header_color,
         font=header_font,
-        anchor="mt"
+        anchor="mm"
     )
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2),
-            f'{int(swap.percent)}',
-            fill=f'{value_to_hex_color(int(swap.percent))}',
-            font=value_font,
-            anchor="mm"
-        )
+            (image_height / 3 * row) - (image_height / 3 / 2) + offset
+        ),
+        f'{int(swap.percent)}',
+        fill=f'{value_to_hex_color(int(swap.percent))}',
+        font=value_font,
+        anchor="mm"
+    )
 
     # Tile: CPU temperature
     row = 2
@@ -454,36 +479,34 @@ def show_dashboard():
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * (row - 1) + (header_size / 2))
+            (image_height / 3 * (row - 1) + (header_size / 2) + (header_size / 4))
         ),
         'CPU °C',
         fill=header_color,
         font=header_font,
-        anchor="mt"
-    
+        anchor="mm"
     )
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+            (image_height / 3 * row) - (image_height / 3 / 2) + offset
         ),
         f'{int(cpu_temp)}',
         fill=f'{value_to_hex_color(int(cpu_temp), 45)}',
         font=value_font,
         anchor="mm"
     )
-    # Test for text information at field bottom. Requires layout change of value to the real middle
-    # draw.text(
-    #     (
-    #         (image_width / 3 * column) - (image_width / 3 / 2),
-    #         (image_height / 3 * (row) - (header_size / 2))
-    #     ),
-    #     f'LÜFTER
-    #       {fan_percent}%', #'LOG: OFF',
-    #     fill=header_color,
-    #     font=header_font,
-    #     anchor="mb"
-    # )
+    if settings.details == True:
+        draw.text(
+            (
+                (image_width / 3 * column) - (image_width / 3 / 2),
+                (image_height / 3 * (row) - (header_size / 2) - (header_size / 4))
+            ),
+            _('FAN') + f':{fan_percent}%',
+            fill=header_color,
+            font=header_font,
+            anchor="mm"
+        )
 
     # Tile: SSD temperature
     row = 2
@@ -492,17 +515,17 @@ def show_dashboard():
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * (row - 1) + (header_size / 2))
+            (image_height / 3 * (row - 1) + (header_size / 2) + (header_size / 4))
         ),
         'SSD °C',
         fill=header_color,
         font=header_font,
-        anchor="mt"
+        anchor="mm"
     )
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+            (image_height / 3 * row) - (image_height / 3 / 2) + offset
         ),
         f'{int(ssd_temp)}',
         fill=f'{value_to_hex_color(int(ssd_temp))}',
@@ -522,34 +545,40 @@ def show_dashboard():
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * (row - 1) + (header_size / 2))
+            (image_height / 3 * (row - 1) + (header_size / 2) + (header_size / 4))
         ),
         f'INFLUX {get_influx_range()}',
         fill=header_color,
         font=header_font,
-        anchor="mt"
+        anchor="mm"
     )
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+            (image_height / 3 * row) - (image_height / 3 / 2) + offset
         ),
         f'{int(influx_meas)}',
         fill=influx_value_color,
         font=value_font,
         anchor="mm"
     )
-    # Test for text information at field bottom. Requires layout change of value to the real middle
-    # draw.text(
-    #     (
-    #         (image_width / 3 * column) - (image_width / 3 / 2),
-    #         (image_height / 3 * (row) - (header_size / 2))
-    #     ),
-    #     f'FAN {fan_percent}%', #'LOG: OFF',
-    #     fill=header_color,
-    #     font=header_font,
-    #     anchor="mb"
-    # )
+    if settings.details == True:
+        if settings.log == True:
+            value = _('ON')
+        elif settings.log == False:
+            value = _('OFF')
+
+        draw.text(
+            (
+                (image_width / 3 * column) - (image_width / 3 / 2),
+                (image_height / 3 * (row) - (header_size / 2) - (header_size / 4))
+            ),
+            _('LOG') + ':' + value,
+
+            fill=header_color,
+            font=header_font,
+            anchor="mm"
+        )
     
     # Tile: Grafana
     row = 3
@@ -565,17 +594,17 @@ def show_dashboard():
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * (row - 1) + (header_size / 2))
+            (image_height / 3 * (row - 1) + (header_size / 2) + (header_size / 4))
         ),
         'GRAFANA',
         fill=header_color,
         font=header_font,
-        anchor="mt"
+        anchor="mm"
     )
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2
+            (image_height / 3 * row) - (image_height / 3 / 2) + offset
         ),
         grafana_value,
         fill=grafana_value_color,
@@ -590,19 +619,19 @@ def show_dashboard():
     draw.text(
         (
             (image_width / 3 * column) - (image_width / 3 / 2),
-            (image_height / 3 * (row - 1) + (header_size / 2))
+            (image_height / 3 * (row - 1) + (header_size / 2) + (header_size / 4))
         ),
         net_interface.upper(),
         fill=header_color,
         font=header_font,
-        anchor="mt"
+        anchor="mm"
     )
 
     if net_d >= 100 or net_u >= 100:
         draw.text(
             (
                 (image_width / 3 * column) - (image_width / 3 / 2),
-                (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 - (value_half_size / 2 )
+                (image_height / 3 * row) - (image_height / 3 / 2) + offset - (value_half_size / 2 )
             ),
             f"D:{net_d:4.0f}",
             fill=value_color,
@@ -612,7 +641,7 @@ def show_dashboard():
         draw.text(
             (
                 (image_width / 3 * column) - (image_width / 3 / 2),
-                (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 + (value_half_size / 2 )
+                (image_height / 3 * row) - (image_height / 3 / 2) + offset + (value_half_size / 2 )
             ),
             f"U:{net_u:4.0f}",
             fill=value_color,
@@ -623,7 +652,7 @@ def show_dashboard():
         draw.text(
             (
                 (image_width / 3 * column) - (image_width / 3 / 2),
-                (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 - (value_half_size / 2 )
+                (image_height / 3 * row) - (image_height / 3 / 2) + offset - (value_half_size / 2 )
             ),
             f"D:{net_d:4.1f}",
             fill=value_color,
@@ -633,7 +662,7 @@ def show_dashboard():
         draw.text(
             (
                 (image_width / 3 * column) - (image_width / 3 / 2),
-                (image_height / 3 * row) - (image_height / 3 / 2) + header_size / 2 + (value_half_size / 2 )
+                (image_height / 3 * row) - (image_height / 3 / 2) + offset + (value_half_size / 2 )
             ),
             f"U:{net_u:4.1f}",
             fill=value_color,
@@ -966,16 +995,22 @@ def high_frequency_tasks():
 def medium_frequency_tasks():
     logging.debug("medium_frequency_tasks()")
 
-    global mem
+    global mem_percent
+    global mem_str
     global swap
     global ssd_temp
     global fan_percent
 
-    mem = psutil.virtual_memory()   
+    mem = psutil.virtual_memory()
+    mem_percent = mem.percent
     swap = psutil.swap_memory()
     ssd_temp = get_temperature_ssd(0)
 
-    fan_percent = get_fan_details()
+    if settings.details == True:
+        fan_percent = get_fan_details()
+        mem_total = str(round(mem.total / (1024.0 ** 3), 1))
+        mem_used = str(round(mem.used / (1024.0 ** 3), 1))
+        mem_str = mem_used + "/" + mem_total + "GB"
 
 def low_frequency_tasks():
     logging.debug("low_frequency_tasks()")
@@ -985,12 +1020,20 @@ def low_frequency_tasks():
     global influx_meas
 
     # ToDo: Check and set it at start for optimization.
-    if os.path.exists("/mnt/storage/") and os.path.isdir("/mnt/storage/"):
-        disk = psutil.disk_usage("/mnt/storage/")
-    else:
-        disk = psutil.disk_usage("/home/")
+    # if os.path.exists("/mnt/storage/") and os.path.isdir("/mnt/storage/"):
+    #     disk = psutil.disk_usage("/mnt/storage/")
+    # else:
+    disk = psutil.disk_usage("/")
 
-    disk_free_tb = disk.used / 1024 / 1024 / 1024 / 1024
+    disk_free_gb = disk.used / (1024 ** 3)
+
+    total_in_human_format = bytes2human(disk.total)
+    used_in_human_format = bytes2human(disk.used)
+
+    # print(disk.total)
+    # print(disk_free_gb)
+    # print(total_in_human_format)
+
 
     influx_meas = get_influx_meas()
     create_influx_meas()
@@ -1008,10 +1051,12 @@ def onetime_frequency_tasks():
     global hostname
     global model
     global ram
+    global cores
 
     hostname = socket.gethostname()
     model = get_raspberry_model()
-    ram = int(round(mem.total / 1024 / 1024 / 1000, 0))
+    # ram = int(round(mem.total / 1024 / 1024 / 1000, 0))
+    cores = psutil.cpu_count(logical=False)
 
 def value_to_hex_color(value, base=50):
     if value < base:

@@ -82,7 +82,7 @@ Upcoming
 
 > The text is much brighter on the small displays (based on the backlight and pixel-pitch)
 ## Requirements
-- Raspberry Pi 5
+- Raspberry Pi 4/5
 - Touch display that fits into the DIN housing / desktop case (preferably with ST7789V2 driver)
 - DIN case / standard case
 - 3D printed model of DIN Case top / desktop case cover
