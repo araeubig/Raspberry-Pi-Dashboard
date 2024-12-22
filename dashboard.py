@@ -358,8 +358,8 @@ def show_dashboard():
             (image_width / 3 * column) - (image_width / 3 / 2),
             (image_height / 3 * row) - (image_height / 3 / 2) + offset
         ),
-        f'{int(mem_percent)}',
-        fill=f'{value_to_hex_color(int(mem_percent))}',
+        f'{int(mem.percent)}',
+        fill=f'{value_to_hex_color(int(mem.percent))}',
         font=value_font,
         anchor="mm"
     )
@@ -369,7 +369,7 @@ def show_dashboard():
                 (image_width / 3 * column) - (image_width / 3 / 2),
                 (image_height / 3 * (row) - (header_size / 2) - (header_size / 4))
             ),
-            mem_str,
+            'mem_str',
             fill=header_color,
             font=header_font,
             anchor="mm"
@@ -757,6 +757,8 @@ def show_systeminfo():
         font=value_half_font,
         anchor="mm"
     )
+
+    image1.save('pil_red.png')
     
     disp.ShowImage(image1)
 
@@ -995,8 +997,9 @@ def high_frequency_tasks():
 def medium_frequency_tasks():
     logging.debug("medium_frequency_tasks()")
 
-    global mem_percent
-    global mem_str
+    global mem
+    # global mem_percent
+    # global mem_str
     global swap
     global ssd_temp
     global fan_percent
@@ -1008,15 +1011,15 @@ def medium_frequency_tasks():
 
     if settings.details == True:
         fan_percent = get_fan_details()
-        mem_total = str(round(mem.total / (1024.0 ** 3), 1))
-        mem_used = str(round(mem.used / (1024.0 ** 3), 1))
-        mem_str = mem_used + "/" + mem_total + "GB"
+        # mem_total = str(round(mem.total / (1024.0 ** 3), 1))
+        # mem_used = str(round(mem.used / (1024.0 ** 3), 1))
+        # mem_str = mem_used + "/" + mem_total + "GB"
 
 def low_frequency_tasks():
     logging.debug("low_frequency_tasks()")
 
     global disk
-    global disk_free_tb
+    # global disk_free_tb
     global influx_meas
 
     # ToDo: Check and set it at start for optimization.
@@ -1025,10 +1028,10 @@ def low_frequency_tasks():
     # else:
     disk = psutil.disk_usage("/")
 
-    disk_free_gb = disk.used / (1024 ** 3)
+    # disk_free_gb = disk.used / (1024 ** 3)
 
-    total_in_human_format = bytes2human(disk.total)
-    used_in_human_format = bytes2human(disk.used)
+    # total_in_human_format = bytes2human(disk.total)
+    # used_in_human_format = bytes2human(disk.used)
 
     # print(disk.total)
     # print(disk_free_gb)
@@ -1037,7 +1040,6 @@ def low_frequency_tasks():
 
     influx_meas = get_influx_meas()
     create_influx_meas()
-
     check_status_grafana()
 
 def log_frequency_tasks():
